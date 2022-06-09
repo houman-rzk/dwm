@@ -119,7 +119,10 @@ struct Monitor {
 	int by;               /* bar geometry */
 	int mx, my, mw, mh;   /* screen size */
 	int wx, wy, ww, wh;   /* window area  */
-	int gappx;            /* gaps between windows */
+	int gappih;           /* horizontal gap between windows */
+	int gappiv;           /* vertical gap between windows */
+	int gappoh;           /* horizontal outer gaps */
+	int gappov;           /* vertical outer gaps */
 	unsigned int seltags;
 	unsigned int sellt;
 	unsigned int tagset[2];
@@ -659,7 +662,10 @@ createmon(void)
 	m->nmaster = nmaster;
 	m->showbar = showbar;
 	m->topbar = topbar;
-	m->gappx = gappx;
+	m->gappih = gappih;
+	m->gappiv = gappiv;
+	m->gappoh = gappoh;
+	m->gappov = gappov;
 	m->lt[0] = &layouts[0];
 	m->lt[1] = &layouts[1 % LENGTH(layouts)];
 	strncpy(m->ltsymbol, layouts[0].symbol, sizeof m->ltsymbol);
@@ -1734,6 +1740,54 @@ tagtoprev(const Arg *arg)
 	view(&(const Arg){.ui = tmp });
 }
 
+
+static void
+tile(Monitor *m)
+{
+	unsigned int i, n;
+	int oh, ov, ih, iv;
+	int mx = 0, my = 0, mh = 0, mw = 0;
+	int sx = 0, sy = 0, sh = 0, sw = 0;
+	float mfacts, sfacts;
+	int mrest, srest;
+	Client *c;
+
+	getgaps(m, &oh, &ov, &ih, &iv, &n);
+	if (n == 0)
+		return;
+
+	sx = mx = m->wx + ov;
+	sy = my = m->wy + oh;
+	mh = m->wh - 2*oh - ih * (MIN(n, m->nmaster) - 1);
+	sh = m->wh - 2*oh - ih * (n - m->nmaster - 1);
+	sw = mw = m->ww - 2*ov;
+
+	if (m->nmaster && n > m->nmaster) {
+		sw = (mw - iv) * (1 - m->mfact);
+		mw = mw - iv - sw;
+		sx = mx + mw + iv;
+	}
+
+	getfacts(m, mh, sh, &mfacts, &sfacts, &mrest, &srest);
+
+	for (i = 0, c = nexttiled(m->clients); c; c = nexttiled(c->next), i++)
+		if (i < m->nmaster) {
+			resize(c, mx, my, mw - (2*c->bw), (mh / mfacts) + (i < mrest ? 1 : 0) - (2*c->bw), 0);
+			my += HEIGHT(c) + ih;
+		} else {
+			resize(c, sx, sy, sw - (2*c->bw), (sh / sfacts) + ((i - m->nmaster) < srest ? 1 : 0) - (2*c->bw), 0);
+			sy += HEIGHT(c) + ih;
+		}
+
+	if (n == 1 && selmon->sel->CenterThisWindow)
+        resizeclient(selmon->sel,
+                (selmon->mw - selmon->mw * 0.5) / 2,
+                (selmon->mh - selmon->mh * 0.5) / 2,
+                selmon->mw * 0.5,
+                selmon->mh * 0.5);
+}
+
+/*
 void
 tile(Monitor *m)
 {
@@ -1760,14 +1814,8 @@ tile(Monitor *m)
 			if (ty + HEIGHT(c) + m->gappx < m->wh)
 				ty += HEIGHT(c) + m->gappx;
 		}
-
-	if (n == 1 && selmon->sel->CenterThisWindow)
-        resizeclient(selmon->sel,
-                (selmon->mw - selmon->mw * 0.5) / 2,
-                (selmon->mh - selmon->mh * 0.5) / 2,
-                selmon->mw * 0.5,
-                selmon->mh * 0.5);
 }
+*/
 
 void
 togglebar(const Arg *arg)
