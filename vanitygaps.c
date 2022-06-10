@@ -235,12 +235,12 @@ bstack(Monitor *m)
 	}
 	
 	// Centerd window first
-	if (n == 1 && selmon->sel->CenterThisWindow)
-        resizeclient(selmon->sel,
-                (selmon->mw - selmon->mw * 0.5) / 2,
-                (selmon->mh - selmon->mh * 0.5) / 2,
-                selmon->mw * 0.5,
-                selmon->mh * 0.5);
+//	if (n == 1 && selmon->sel->CenterThisWindow)
+//        resizeclient(selmon->sel,
+//                (selmon->mw - selmon->mw * 0.5) / 2,
+//                (selmon->mh - selmon->mh * 0.5) / 2,
+//                selmon->mw * 0.5,
+//                selmon->mh * 0.5);
 }
 
 static void
@@ -285,12 +285,12 @@ bstackhoriz(Monitor *m)
 	}
 	
 	// Centerd window first
-	if (n == 1 && selmon->sel->CenterThisWindow)
-        resizeclient(selmon->sel,
-                (selmon->mw - selmon->mw * 0.5) / 2,
-                (selmon->mh - selmon->mh * 0.5) / 2,
-                selmon->mw * 0.5,
-                selmon->mh * 0.5);
+//	if (n == 1 && selmon->sel->CenterThisWindow)
+//        resizeclient(selmon->sel,
+//                (selmon->mw - selmon->mw * 0.5) / 2,
+//                (selmon->mh - selmon->mh * 0.5) / 2,
+//                selmon->mw * 0.5,
+//                selmon->mh * 0.5);
 }
 
 /*
@@ -382,12 +382,12 @@ centeredmaster(Monitor *m)
 	}
 	
 	// Centerd window first
-	if (n == 1 && selmon->sel->CenterThisWindow)
-        resizeclient(selmon->sel,
-                (selmon->mw - selmon->mw * 0.5) / 2,
-                (selmon->mh - selmon->mh * 0.5) / 2,
-                selmon->mw * 0.5,
-                selmon->mh * 0.5);
+//	if (n == 1 && selmon->sel->CenterThisWindow)
+//        resizeclient(selmon->sel,
+//                (selmon->mw - selmon->mw * 0.5) / 2,
+//                (selmon->mh - selmon->mh * 0.5) / 2,
+//                selmon->mw * 0.5,
+//                selmon->mh * 0.5);
 }
 
 void
@@ -443,12 +443,12 @@ centeredfloatingmaster(Monitor *m)
 		}
 	
 	// Centerd window first
-	if (n == 1 && selmon->sel->CenterThisWindow)
-        resizeclient(selmon->sel,
-                (selmon->mw - selmon->mw * 0.5) / 2,
-                (selmon->mh - selmon->mh * 0.5) / 2,
-                selmon->mw * 0.5,
-                selmon->mh * 0.5);
+//	if (n == 1 && selmon->sel->CenterThisWindow)
+//        resizeclient(selmon->sel,
+//                (selmon->mw - selmon->mw * 0.5) / 2,
+//                (selmon->mh - selmon->mh * 0.5) / 2,
+//                selmon->mw * 0.5,
+//                selmon->mh * 0.5);
 }
 
 /*
@@ -496,12 +496,12 @@ deck(Monitor *m)
 		}
 	
 	// Centerd window first
-	if (n == 1 && selmon->sel->CenterThisWindow)
-        resizeclient(selmon->sel,
-                (selmon->mw - selmon->mw * 0.5) / 2,
-                (selmon->mh - selmon->mh * 0.5) / 2,
-                selmon->mw * 0.5,
-                selmon->mh * 0.5);
+//	if (n == 1 && selmon->sel->CenterThisWindow)
+//        resizeclient(selmon->sel,
+//                (selmon->mw - selmon->mw * 0.5) / 2,
+//                (selmon->mh - selmon->mh * 0.5) / 2,
+//                selmon->mw * 0.5,
+//                selmon->mh * 0.5);
 }
 
 /*
@@ -595,12 +595,12 @@ fibonacci(Monitor *m, int s)
 	}
 	
 	// Centerd window first
-	if (n == 1 && selmon->sel->CenterThisWindow)
-        resizeclient(selmon->sel,
-                (selmon->mw - selmon->mw * 0.5) / 2,
-                (selmon->mh - selmon->mh * 0.5) / 2,
-                selmon->mw * 0.5,
-                selmon->mh * 0.5);
+//	if (n == 1 && selmon->sel->CenterThisWindow)
+//        resizeclient(selmon->sel,
+//                (selmon->mw - selmon->mw * 0.5) / 2,
+//                (selmon->mh - selmon->mh * 0.5) / 2,
+//                selmon->mw * 0.5,
+//                selmon->mh * 0.5);
 }
 
 void
@@ -668,12 +668,12 @@ gaplessgrid(Monitor *m)
 	}
 	
 	// Centerd window first
-	if (n == 1 && selmon->sel->CenterThisWindow)
-        resizeclient(selmon->sel,
-                (selmon->mw - selmon->mw * 0.5) / 2,
-                (selmon->mh - selmon->mh * 0.5) / 2,
-                selmon->mw * 0.5,
-                selmon->mh * 0.5);
+//	if (n == 1 && selmon->sel->CenterThisWindow)
+//        resizeclient(selmon->sel,
+//                (selmon->mw - selmon->mw * 0.5) / 2,
+//                (selmon->mh - selmon->mh * 0.5) / 2,
+//                selmon->mw * 0.5,
+//                selmon->mh * 0.5);
 }
 
 /*
@@ -710,12 +710,12 @@ grid(Monitor *m)
 	}
 	
 	// Centerd window first
-	if (n == 1 && selmon->sel->CenterThisWindow)
-        resizeclient(selmon->sel,
-                (selmon->mw - selmon->mw * 0.5) / 2,
-                (selmon->mh - selmon->mh * 0.5) / 2,
-                selmon->mw * 0.5,
-                selmon->mh * 0.5);
+//	if (n == 1 && selmon->sel->CenterThisWindow)
+//        resizeclient(selmon->sel,
+//                (selmon->mw - selmon->mw * 0.5) / 2,
+//                (selmon->mh - selmon->mh * 0.5) / 2,
+//                selmon->mw * 0.5,
+//                selmon->mh * 0.5);
 }
 
 /*
@@ -772,12 +772,12 @@ horizgrid(Monitor *m) {
 		}
 	
 	// Centerd window first
-	if (n == 1 && selmon->sel->CenterThisWindow)
-        resizeclient(selmon->sel,
-                (selmon->mw - selmon->mw * 0.5) / 2,
-                (selmon->mh - selmon->mh * 0.5) / 2,
-                selmon->mw * 0.5,
-                selmon->mh * 0.5);
+//	if (n == 1 && selmon->sel->CenterThisWindow)
+//        resizeclient(selmon->sel,
+//                (selmon->mw - selmon->mw * 0.5) / 2,
+//                (selmon->mh - selmon->mh * 0.5) / 2,
+//                selmon->mw * 0.5,
+//                selmon->mh * 0.5);
 }
 
 /*
@@ -838,12 +838,12 @@ nrowgrid(Monitor *m)
 	}
 	
 	// Centerd window first
-	if (n == 1 && selmon->sel->CenterThisWindow)
-        resizeclient(selmon->sel,
-                (selmon->mw - selmon->mw * 0.5) / 2,
-                (selmon->mh - selmon->mh * 0.5) / 2,
-                selmon->mw * 0.5,
-                selmon->mh * 0.5);
+//	if (n == 1 && selmon->sel->CenterThisWindow)
+//        resizeclient(selmon->sel,
+//                (selmon->mw - selmon->mw * 0.5) / 2,
+//                (selmon->mh - selmon->mh * 0.5) / 2,
+//                selmon->mw * 0.5,
+//                selmon->mh * 0.5);
 }
 
 /*
@@ -888,10 +888,10 @@ tile(Monitor *m)
 		}
 	
 	// Centerd window first
-	if (n == 1 && selmon->sel->CenterThisWindow)
-        resizeclient(selmon->sel,
-                (selmon->mw - selmon->mw * 0.5) / 2,
-                (selmon->mh - selmon->mh * 0.5) / 2,
-                selmon->mw * 0.5,
-                selmon->mh * 0.5);
+//	if (n == 1 && selmon->sel->CenterThisWindow)
+//        resizeclient(selmon->sel,
+//                (selmon->mw - selmon->mw * 0.5) / 2,
+//                (selmon->mh - selmon->mh * 0.5) / 2,
+//                selmon->mw * 0.5,
+//                selmon->mh * 0.5);
 }
