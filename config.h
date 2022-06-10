@@ -130,6 +130,7 @@ static Key keys[] = {
 	{ MODKEY,		        XK_period, cyclelayout,    {.i = +1 } },
 	{ MODKEY|ShiftMask,		XK_s,  	   togglescratch,  {.ui = 0 } },
 	{ MODKEY|ShiftMask,		XK_c,  	   togglescratch,  {.ui = 1 } },
+	{ MODKEY,                       XK_s,      togglesticky,   {0} },
 //	{ MODKEY,      			XK_u,	   togglescratch,  {.ui = 1 } },
 //	{ MODKEY,      			XK_x,	   togglescratch,  {.ui = 2 } },
 
