@@ -106,6 +106,8 @@ static const Layout layouts[] = {
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/bash", "-c", cmd, NULL } }
 
+#define STATUSBAR "dwmblocks"
+
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
@@ -162,10 +164,10 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_f,      togglefullscr,  {0} },
 //	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
 //	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
-//	{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
-//	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
-//	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
-//	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
+	{ Mod1Mask|ShiftMask|ControlMask,XK_comma, focusmon,       {.i = -1 } },
+	{ Mod1Mask|ShiftMask|ControlMask,XK_period,focusmon,       {.i = +1 } },
+	{ MODKEY|ShiftMask|ControlMask, XK_comma,  tagmon,         {.i = -1 } },
+	{ MODKEY|ShiftMask|ControlMask, XK_period, tagmon,         {.i = +1 } },
 	{ MODKEY,                       XK_l,      viewnext,       {0} },
 	{ MODKEY,                       XK_h,      viewprev,       {0} },
 	{ MODKEY|ShiftMask,             XK_l,      tagtonext,      {0} },
@@ -190,7 +192,9 @@ static Button buttons[] = {
 	{ ClkLtSymbol,          0,              Button1,        setlayout,      {0} },
 	{ ClkLtSymbol,          0,              Button3,        setlayout,      {.v = &layouts[2]} },
 	{ ClkWinTitle,          0,              Button2,        zoom,           {0} },
-	{ ClkStatusText,        0,              Button2,        spawn,          {.v = termcmd } },
+	{ ClkStatusText,        0,              Button1,        sigdwmblocks,   {.i = 1} },
+	{ ClkStatusText,        0,              Button2,        sigdwmblocks,   {.i = 2} },
+	{ ClkStatusText,        0,              Button3,        sigdwmblocks,   {.i = 3} },
 	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
 	{ ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
 	{ ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} },
