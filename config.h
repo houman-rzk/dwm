@@ -122,6 +122,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_j,      movestack,      {.i = +1 } },
+	{ MODKEY|ShiftMask,		XK_space,  unfloatvisible, {0} },
 	{ MODKEY|ShiftMask,             XK_k,      movestack,      {.i = -1 } },
 	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
 	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
@@ -134,6 +135,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,		XK_c,  	   togglescratch,  {.ui = 1 } },
 	{ MODKEY,                       XK_s,      togglesticky,   {0} },
 	{ MODKEY|ShiftMask,             XK_e,      spawn,          {.v = (const char*[]){"dmenuunicode", NULL} } },
+	{ MODKEY|ShiftMask,             XK_q,      spawn,          {.v = (const char*[]){"sysact", NULL} } },
 //	{ MODKEY,      			XK_u,	   togglescratch,  {.ui = 1 } },
 //	{ MODKEY,      			XK_x,	   togglescratch,  {.ui = 2 } },
 
