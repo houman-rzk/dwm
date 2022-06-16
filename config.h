@@ -112,12 +112,14 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-n",/* dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4,*/ NULL };
 static const char *termcmd[]  = { TERMINAL, NULL };
+static const char *lfcmd[]  = { TERMINAL, "-e", "lf", NULL };
 
 #include "movestack.c"
 static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,	                XK_Return, spawn,          {.v = termcmd } },
+	{ MODKEY,	                XK_f,      spawn,          {.v = lfcmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
@@ -136,6 +138,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_s,      togglesticky,   {0} },
 	{ MODKEY|ShiftMask,             XK_e,      spawn,          {.v = (const char*[]){"dmenuunicode", NULL} } },
 	{ MODKEY|ShiftMask,             XK_q,      spawn,          {.v = (const char*[]){"sysact", NULL} } },
+	{ MODKEY,                       XK_l,      spawn,          {.v = (const char*[]){"slock", NULL} } },
 //	{ MODKEY,      			XK_u,	   togglescratch,  {.ui = 1 } },
 //	{ MODKEY,      			XK_x,	   togglescratch,  {.ui = 2 } },
 
@@ -170,10 +173,10 @@ static Key keys[] = {
 	{ Mod1Mask|ShiftMask|ControlMask,XK_period,focusmon,       {.i = +1 } },
 	{ MODKEY|ShiftMask|ControlMask, XK_comma,  tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask|ControlMask, XK_period, tagmon,         {.i = +1 } },
-	{ MODKEY,                       XK_l,      viewnext,       {0} },
-	{ MODKEY,                       XK_h,      viewprev,       {0} },
-	{ MODKEY|ShiftMask,             XK_l,      tagtonext,      {0} },
-	{ MODKEY|ShiftMask,             XK_h,      tagtoprev,      {0} },
+	{ MODKEY,                       XK_Page_Up,  viewnext,     {0} },
+	{ MODKEY,                       XK_Page_Down,viewprev,     {0} },
+	{ MODKEY|ShiftMask,             XK_Page_Up,  tagtonext,    {0} },
+	{ MODKEY|ShiftMask,             XK_Page_Down,tagtoprev,    {0} },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
