@@ -15,7 +15,7 @@ static const unsigned int gappov    = 20;       /* vert outer gap between window
 static       int smartgaps          = 0;        /* 1 means no outer gap when there is only one window */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { "monospace:size=12", "NotoColorEmoji:pixelsize=12:antialias=true:autohint=true" };
+static const char *fonts[]          = { "monospace:size=12", "NotoColorEmoji:pixelsize=12:antialias=true:autohint=true", "BitstreamVeraSansMono Nerd Font Mono:style=Roman:pixelsize=30:antialias=true:autohint=true" };
 static const char dmenufont[]       = "monospace:size=12";
 static const char col_gray1[]       = "#222222";
 static const char col_gray2[]       = "#444444";
@@ -35,11 +35,13 @@ typedef struct {
 } Sp;
 const char *spcmd1[] = {TERMINAL, "-n", "spterm", "-g", "120x34", NULL };
 const char *spcmd2[] = {TERMINAL, "-n", "spcalc", "-g", "50x20",  "-f", "monospace:size=16", "-e", "bc", "-lq", NULL };
+//const char *spcmd3[] = {TERMINAL, "-n", "sptasks", "-e", "taskwarrior-tui", NULL };
 //const char *spcmd3[] = {"keepassxc", NULL };
 static Sp scratchpads[] = {
 	/* name          cmd  */
 	{"spterm",      spcmd1},
 	{"spcalc",      spcmd2},
+	//{"sptasks",     spcmd3},
 	//{"keepassxc",   spcmd3},
 };
 
@@ -134,11 +136,12 @@ static Key keys[] = {
 	{ MODKEY,			XK_comma,  cyclelayout,    {.i = -1 } },
 	{ MODKEY,		        XK_period, cyclelayout,    {.i = +1 } },
 	{ MODKEY|ShiftMask,		XK_s,  	   togglescratch,  {.ui = 0 } },
-	{ MODKEY|ShiftMask,		XK_c,  	   togglescratch,  {.ui = 1 } },
+	{ MODKEY|ShiftMask,		XK_x,  	   togglescratch,  {.ui = 1 } },
 	{ MODKEY,                       XK_s,      togglesticky,   {0} },
 	{ MODKEY|ShiftMask,             XK_e,      spawn,          {.v = (const char*[]){"dmenuunicode", NULL} } },
+	{ MODKEY|ShiftMask,             XK_t,      spawn,          {.v = (const char*[]){"tasks", NULL} } },
 	{ MODKEY|ShiftMask,             XK_q,      spawn,          {.v = (const char*[]){"sysact", NULL} } },
-	{ MODKEY,                       XK_l,      spawn,          {.v = (const char*[]){"slock", NULL} } },
+	{ MODKEY|ShiftMask,             XK_l,      spawn,          {.v = (const char*[]){"slock", NULL} } },
 //	{ MODKEY,      			XK_u,	   togglescratch,  {.ui = 1 } },
 //	{ MODKEY,      			XK_x,	   togglescratch,  {.ui = 2 } },
 
@@ -187,7 +190,7 @@ static Key keys[] = {
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
 //	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
-	{ MODKEY|ControlMask|ShiftMask, XK_q,      quit,           {1} }, 
+	{ MODKEY|ControlMask|ShiftMask, XK_q,      quit,           {1} }, // Restart dwm
 };
 
 /* button definitions */
