@@ -139,6 +139,8 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,		XK_x,  	   togglescratch,  {.ui = 1 } },
 	{ MODKEY,                       XK_s,      togglesticky,   {0} },
 	{ MODKEY|ShiftMask,             XK_e,      spawn,          {.v = (const char*[]){"dmenuunicode", NULL} } },
+	{ MODKEY|ShiftMask,             XK_c,      spawn,          {.v = (const char*[]){"clipmenu", NULL} } },
+	{ MODKEY|ShiftMask|ControlMask, XK_c,      spawn,          {.v = (const char*[]){"clear-clipboards", NULL} } },
 	{ MODKEY|ShiftMask,             XK_t,      spawn,          {.v = (const char*[]){"tasks", NULL} } },
 	{ MODKEY|ShiftMask,             XK_q,      spawn,          {.v = (const char*[]){"sysact", NULL} } },
 	{ MODKEY|ShiftMask,             XK_l,      spawn,          {.v = (const char*[]){"slock", NULL} } },
