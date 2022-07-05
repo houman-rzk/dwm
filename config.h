@@ -117,6 +117,7 @@ static const char *termcmd[]  = { TERMINAL, NULL };
 static const char *lfcmd[]  = { TERMINAL, "-e", "lf", NULL };
 
 #include "movestack.c"
+#include "X11/XF86keysym.h"
 static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
@@ -185,8 +186,8 @@ static Key keys[] = {
 //	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
 	{ MODKEY|ControlMask|ShiftMask, XK_q,      quit,           {1} }, // Restart dwm
 
-	{ 0,XF86XK_MonBrightnessUp,        		   spawn,          {.v = (const char*[]){"xbacklight", "-inc", "10", NULL} } }, // Restart dwm
-	{ 0,XF86XK_MonBrightnessDown,        		   spawn,          {.v = (const char*[]){"xbacklight", "-dec", "10", NULL} } }, // Restart dwm
+	{ 0,XF86XK_MonBrightnessUp,        		   spawn,          {.v = (const char*[]){"brightness", "up", NULL} } },
+	{ 0,XF86XK_MonBrightnessDown,        		   spawn,          {.v = (const char*[]){"brightness", "down", NULL} } },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
