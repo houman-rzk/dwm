@@ -112,7 +112,7 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-n",/* dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4,*/ NULL };
+static const char *dmenucmd[] = { "dmenu_run",/* "-n", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4,*/ NULL };
 static const char *termcmd[]  = { TERMINAL, NULL };
 static const char *lfcmd[]  = { TERMINAL, "-e", "lf", NULL };
 
@@ -182,6 +182,11 @@ static Key keys[] = {
 	{ MODKEY,                       XK_Page_Down,viewprev,     {0} },
 	{ MODKEY|ShiftMask,             XK_Page_Up,  tagtonext,    {0} },
 	{ MODKEY|ShiftMask,             XK_Page_Down,tagtoprev,    {0} },
+//	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
+	{ MODKEY|ControlMask|ShiftMask, XK_q,      quit,           {1} }, // Restart dwm
+
+	{ 0,XF86XK_MonBrightnessUp,        		   spawn,          {.v = (const char*[]){"xbacklight", "-inc", "10", NULL} } }, // Restart dwm
+	{ 0,XF86XK_MonBrightnessDown,        		   spawn,          {.v = (const char*[]){"xbacklight", "-dec", "10", NULL} } }, // Restart dwm
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
@@ -191,8 +196,6 @@ static Key keys[] = {
 	TAGKEYS(                        XK_7,                      6)
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
-//	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
-	{ MODKEY|ControlMask|ShiftMask, XK_q,      quit,           {1} }, // Restart dwm
 };
 
 /* button definitions */
