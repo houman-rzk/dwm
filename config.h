@@ -144,7 +144,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask|ControlMask, XK_c,      spawn,          {.v = (const char*[]){"clear-clipboards", NULL} } },
 	{ MODKEY|ShiftMask,             XK_t,      spawn,          {.v = (const char*[]){"tasks", NULL} } },
 	{ MODKEY|ShiftMask,             XK_q,      spawn,          {.v = (const char*[]){"sysact", NULL} } },
-	{ MODKEY|ShiftMask,             XK_l,      spawn,          {.v = (const char*[]){"slock", NULL} } },
+	{ MODKEY|ControlMask,             XK_l,      spawn,          {.v = (const char*[]){"slock", NULL} } },
 //	{ MODKEY,      			XK_u,	   togglescratch,  {.ui = 1 } },
 //	{ MODKEY,      			XK_x,	   togglescratch,  {.ui = 2 } },
 
@@ -168,6 +168,7 @@ static Key keys[] = {
 	{ MODKEY,	                XK_c,      killclient,     {0} },
 	{ LEFTALT|ShiftMask,            XK_x,      killunsel,      {0} },
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
+	{ MODKEY,                       XK_u,      togglefloating, {0} },
 //	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
 //	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
 //	{ MODKEY,                       XK_space,  setlayout,      {0} },
@@ -175,14 +176,22 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_f,      togglefullscr,  {0} },
 //	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
 //	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
-	{ Mod1Mask|ShiftMask|ControlMask,XK_comma, focusmon,       {.i = -1 } },
+	/*{ Mod1Mask|ShiftMask|ControlMask,XK_comma, focusmon,       {.i = -1 } },
 	{ Mod1Mask|ShiftMask|ControlMask,XK_period,focusmon,       {.i = +1 } },
 	{ MODKEY|ShiftMask|ControlMask, XK_comma,  tagmon,         {.i = -1 } },
-	{ MODKEY|ShiftMask|ControlMask, XK_period, tagmon,         {.i = +1 } },
-	{ MODKEY,                       XK_Page_Up,  viewnext,     {0} },
+	{ MODKEY|ShiftMask|ControlMask, XK_period, tagmon,         {.i = +1 } },*/
+	{ Mod1Mask,						XK_h,	   focusmon,       {.i = -1 } },
+	{ Mod1Mask,						XK_l,	   focusmon,       {.i = +1 } },
+	{ Mod1Mask|ShiftMask,			XK_h,	   tagmon,         {.i = -1 } },
+	{ Mod1Mask|ShiftMask,			XK_l,	   tagmon,         {.i = +1 } },
+/*	{ MODKEY,                       XK_Page_Up,  viewnext,     {0} },
 	{ MODKEY,                       XK_Page_Down,viewprev,     {0} },
 	{ MODKEY|ShiftMask,             XK_Page_Up,  tagtonext,    {0} },
-	{ MODKEY|ShiftMask,             XK_Page_Down,tagtoprev,    {0} },
+	{ MODKEY|ShiftMask,             XK_Page_Down,tagtoprev,    {0} },*/
+	{ MODKEY,                       XK_l,  viewnext,     {0} },
+	{ MODKEY,                       XK_h,viewprev,     {0} },
+	{ MODKEY|ShiftMask,             XK_l,  tagtonext,    {0} },
+	{ MODKEY|ShiftMask,             XK_h,tagtoprev,    {0} },
 //	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
 	{ MODKEY|ControlMask|ShiftMask, XK_q,      quit,           {1} }, // Restart dwm
 

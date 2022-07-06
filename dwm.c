@@ -1076,6 +1076,10 @@ focusmon(const Arg *arg)
 	if ((m = dirtomon(arg->i)) == selmon)
 		return;
 	unfocus(selmon->sel, 0);
+	
+	// Moves the mouse
+	//XWarpPointer(dpy, None, m->barwin, 0, 0, 0, 0, m->mw / 2, m->mh / 2); // Default
+	XWarpPointer(dpy, None, m->barwin, 0, 0, 0, 0, m->mw / 2, m->mh / 1.001);
 	selmon = m;
 	focus(NULL);
 }
@@ -2067,6 +2071,9 @@ tagmon(const Arg *arg)
 	if (!selmon->sel || !mons->next)
 		return;
 	sendmon(selmon->sel, dirtomon(arg->i));
+	
+	// This effectively moves the mouse along with the client window
+	focusmon(arg);
 }
 
 void
