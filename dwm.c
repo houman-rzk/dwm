@@ -66,6 +66,9 @@
 #define SPTAGMASK   			(((1 << LENGTH(scratchpads))-1) << LENGTH(tags))
 #define TEXTW(X)                (drw_fontset_getwidth(drw, (X)) + lrpad)
 
+/* Constants */
+#define POINTERHEIGHT 1.00001
+
 /* enums */
 enum { CurNormal, CurResize, CurMove, CurLast }; /* cursor */
 enum { SchemeNorm, SchemeInv, SchemeSel }; /* color schemes */
@@ -1084,7 +1087,7 @@ focusmon(const Arg *arg)
 	
 	// Moves the mouse
 	//XWarpPointer(dpy, None, m->barwin, 0, 0, 0, 0, m->mw / 2, m->mh / 2); // Default
-	XWarpPointer(dpy, None, m->barwin, 0, 0, 0, 0, m->mw / 2, m->mh / 1.005);
+	XWarpPointer(dpy, None, m->barwin, 0, 0, 0, 0, m->mw / 2, m->mh / POINTERHEIGHT);
 	selmon = m;
 	focus(NULL);
 }
@@ -1113,6 +1116,8 @@ focusstack(const Arg *arg)
 		restack(selmon);
 		focus(c);
 	}
+
+	XWarpPointer(dpy, None, selmon->barwin, 0, 0, 0, 0, selmon->mw / 2, selmon->mh / POINTERHEIGHT);
 }
 
 Atom
