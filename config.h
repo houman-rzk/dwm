@@ -20,8 +20,7 @@ static const char dmenufont[]       = "monospace:size=12";
 static const char col_gray1[]       = "#222222";
 static const char col_gray2[]       = "#444444";
 static const char col_gray3[]       = "#bbbbbb";
-static const char col_gray4[]       = "#eeeeee";
-static const char col_cyan[]        = "#005577";
+static const char col_gray4[]       = "#eeeeee"; static const char col_cyan[]        = "#005577";
 static const char col_scarlet[]     = "#9a2323";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
@@ -151,8 +150,6 @@ static Key keys[] = {
 
 //	{ MODKEY|Mod4Mask,              XK_u,      incrgaps,       {.i = +1 } },
 //	{ MODKEY|Mod4Mask|ShiftMask,    XK_u,      incrgaps,       {.i = -1 } },
-//	{ MODKEY|Mod4Mask,              XK_i,      incrigaps,      {.i = +1 } },
-//	{ MODKEY|Mod4Mask|ShiftMask,    XK_i,      incrigaps,      {.i = -1 } },
 //	{ MODKEY|Mod4Mask,              XK_o,      incrogaps,      {.i = +1 } },
 //	{ MODKEY|Mod4Mask|ShiftMask,    XK_o,      incrogaps,      {.i = -1 } },
 //	{ MODKEY|Mod4Mask,              XK_6,      incrihgaps,     {.i = +1 } },
@@ -195,9 +192,11 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_h,tagtoprev,    {0} },
 //	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
 	{ MODKEY|ControlMask|ShiftMask, XK_q,      quit,           {1} }, // Restart dwm
+	{ MODKEY|ControlMask, XK_d,      spawn,           {.v = (const char*[]){"cycle-displays", NULL} } },
 
 	{ 0,XF86XK_MonBrightnessUp,        		   spawn,          {.v = (const char*[]){"brightness", "up", NULL} } },
 	{ 0,XF86XK_MonBrightnessDown,        		   spawn,          {.v = (const char*[]){"brightness", "down", NULL} } },
+	{ 0,XF86XK_Display,        		   spawn,          {.v = (const char*[]){"cycle-displays", NULL} } },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
