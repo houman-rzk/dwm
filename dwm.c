@@ -1330,6 +1330,13 @@ killclient(const Arg *arg)
 		XSetErrorHandler(xerror);
 		XUngrabServer(dpy);
 	}
+
+	if(!selmon->sel->next) {
+		selmon->showbar = 1;
+		updatebarpos(selmon);
+		XMoveResizeWindow(dpy, selmon->barwin, selmon->wx, selmon->by, selmon->ww, bh);
+		arrange(selmon);
+	}
 }
 
 void
@@ -2188,7 +2195,16 @@ togglefullscr(const Arg *arg)
 {
   if(selmon->sel)
   {
-    togglebar(arg);
+    //togglebar(arg);
+	if(!selmon->sel->isfullscreen)
+		selmon->showbar = 0;
+	else
+		selmon->showbar = 1;
+
+	updatebarpos(selmon);
+	XMoveResizeWindow(dpy, selmon->barwin, selmon->wx, selmon->by, selmon->ww, bh);
+	arrange(selmon);
+
     setfullscreen(selmon->sel, !selmon->sel->isfullscreen);
   }
 }
@@ -2310,7 +2326,7 @@ unmanage(Client *c, int destroyed)
 		arrange(m);
 		focus(nc);
 		if(fullscreen)
-    			setfullscreen(selmon->sel, !selmon->sel->isfullscreen);
+    		togglefullscr(0);
 		updateclientlist();
 	}
 }
