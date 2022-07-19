@@ -106,7 +106,7 @@ static const Layout layouts[] = {
 	{ MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} },
 
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
-#define SHCMD(cmd) { .v = (const char*[]){ "/bin/bash", "-c", cmd, NULL } }
+#define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
 #define STATUSBAR "dwmblocks"
 
@@ -115,6 +115,7 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 static const char *dmenucmd[] = { "dmenu_run",/* "-n", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4,*/ NULL };
 static const char *termcmd[]  = { TERMINAL, NULL };
 static const char *lfcmd[]  = { TERMINAL, "-e", "lf", NULL };
+static const char *musiccmd[]  = { TERMINAL, "-e", "ncmpcpp", NULL };
 
 #include "movestack.c"
 #include "X11/XF86keysym.h"
@@ -186,17 +187,25 @@ static Key keys[] = {
 	{ MODKEY,                       XK_Page_Down,viewprev,     {0} },
 	{ MODKEY|ShiftMask,             XK_Page_Up,  tagtonext,    {0} },
 	{ MODKEY|ShiftMask,             XK_Page_Down,tagtoprev,    {0} },*/
-	{ MODKEY,                       XK_l,  viewnext,     {0} },
-	{ MODKEY,                       XK_h,viewprev,     {0} },
-	{ MODKEY|ShiftMask,             XK_l,  tagtonext,    {0} },
-	{ MODKEY|ShiftMask,             XK_h,tagtoprev,    {0} },
+	{ MODKEY,                       XK_l,      viewnext,       {0} },
+	{ MODKEY,                       XK_h,      viewprev,       {0} },
+	{ MODKEY|ShiftMask,             XK_l,      tagtonext,      {0} },
+	{ MODKEY|ShiftMask,             XK_h,      tagtoprev,      {0} },
 //	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
 	{ MODKEY|ControlMask|ShiftMask, XK_q,      quit,           {1} }, // Restart dwm
-	{ MODKEY|ControlMask, XK_d,      spawn,           {.v = (const char*[]){"cycle-displays", NULL} } },
-
-	{ 0,XF86XK_MonBrightnessUp,        		   spawn,          {.v = (const char*[]){"brightness", "up", NULL} } },
-	{ 0,XF86XK_MonBrightnessDown,        		   spawn,          {.v = (const char*[]){"brightness", "down", NULL} } },
-	{ 0,XF86XK_Display,        		   spawn,          {.v = (const char*[]){"cycle-displays", NULL} } },
+	{ MODKEY|ControlMask,           XK_d,      spawn,          {.v = (const char*[]){"cycle-displays", NULL} } },
+	{ 0,XF86XK_MonBrightnessUp,                spawn,          {.v = (const char*[]){"brightness", "up", NULL} } },
+	{ 0,XF86XK_MonBrightnessDown,              spawn,          {.v = (const char*[]){"brightness", "down", NULL} } },
+	{ 0,XF86XK_Display,                        spawn,          {.v = (const char*[]){"cycle-displays", NULL} } },
+	{ 0,XF86XK_AudioRaiseVolume,               spawn,          SHCMD("amixer set Master 5%+ ; pkill -RTMIN+6 dwmblocks") },
+	{ 0,XF86XK_AudioLowerVolume,               spawn,          SHCMD("amixer set Master 5%- ; pkill -RTMIN+6 dwmblocks") },
+	{ 0,XF86XK_AudioMute,                      spawn,          SHCMD("amixer set Master 0% ; pkill -RTMIN+6 dwmblocks") },
+	{ MODKEY|ControlMask,           XK_F6,     spawn,          {.v = (const char*[]){"redlight", "up", NULL} } },
+	{ MODKEY|ControlMask,           XK_F5,     spawn,          {.v = (const char*[]){"redlight", "down", NULL} } },
+	{ MODKEY|ShiftMask,           XK_less,     spawn,          SHCMD("music next") },
+	{ MODKEY,           XK_less,     spawn,          SHCMD("music prev") },
+	{ MODKEY|ControlMask,           XK_p,     spawn,          SHCMD("music toggle") },
+	{ MODKEY|ControlMask,           XK_m,     spawn,          {.v = musiccmd} },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
@@ -218,6 +227,8 @@ static Button buttons[] = {
 	{ ClkStatusText,        0,              Button1,        sigdwmblocks,   {.i = 1} },
 	{ ClkStatusText,        0,              Button2,        sigdwmblocks,   {.i = 2} },
 	{ ClkStatusText,        0,              Button3,        sigdwmblocks,   {.i = 3} },
+	{ ClkStatusText,        0,              Button4,        sigdwmblocks,   {.i = 4} },
+	{ ClkStatusText,        0,              Button5,        sigdwmblocks,   {.i = 5} },
 	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
 	{ ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
 	{ ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} },
@@ -226,4 +237,3 @@ static Button buttons[] = {
 	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
 	{ ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
 };
-
