@@ -20,7 +20,8 @@ static const char dmenufont[]       = "monospace:size=12";
 static const char col_gray1[]       = "#222222";
 static const char col_gray2[]       = "#444444";
 static const char col_gray3[]       = "#bbbbbb";
-static const char col_gray4[]       = "#eeeeee"; static const char col_cyan[]        = "#005577";
+static const char col_gray4[]       = "#eeeeee";
+static const char col_cyan[]        = "#005577";
 static const char col_scarlet[]     = "#9a2323";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
@@ -35,14 +36,26 @@ typedef struct {
 } Sp;
 const char *spcmd1[] = {TERMINAL, "-n", "spterm", "-g", "120x34", NULL };
 const char *spcmd2[] = {TERMINAL, "-n", "spcalc", "-g", "50x20",  "-f", "monospace:size=16", "-e", "bc", "-lq", NULL };
-//const char *spcmd3[] = {TERMINAL, "-n", "sptasks", "-e", "taskwarrior-tui", NULL };
-//const char *spcmd3[] = {"keepassxc", NULL };
+const char *spcmd3[] = {TERMINAL, "-n", "sptasks", "-g", "120x34", "-e", "tasks-wraper", NULL };
+const char *spcmd4[] = {TERMINAL, "-n", "spkeepass", "-g", "120x34", "-e", "keepassxc", NULL };
+const char *spcmd5[] = {TERMINAL, "-n", "splf", "-g", "120x34", "-e", "lfrun", NULL };
+const char *spcmd6[] = {TERMINAL, "-n", "spmusic", "-g", "120x34", "-e", "ncmpcpp", NULL };
+const char *spcmd7[] = {TERMINAL, "-n", "spweather", "-g", "120x34",  "-f", "monospace:size=12", "-e", "less", "-Srf", "/home/ache/.cache/weatherreport", NULL };
+const char *spcmd8[] = {TERMINAL, "-n", "spvolume", "-g", "120x34", "-e", "pulsemixer", NULL };
+const char *spcmd9[] = {TERMINAL, "-n", "spnetwork", "-g", "120x34", "-e", "nmtui", NULL };
+const char *spcmd10[] = {TERMINAL, "-n", "spresources", "-g", "120x34", "-e", "htop", NULL };
 static Sp scratchpads[] = {
 	/* name          cmd  */
 	{"spterm",      spcmd1},
 	{"spcalc",      spcmd2},
-	//{"sptasks",     spcmd3},
-	//{"keepassxc",   spcmd3},
+	{"sptasks",     spcmd3},
+	{"spkeepass",   spcmd4},
+	{"splf",        spcmd5},
+	{"spmusic",     spcmd6},
+	{"spweather",   spcmd7},
+	{"spvolume",    spcmd8},
+	{"spnetwork",   spcmd9},
+	{"spresources", spcmd10},
 };
 
 /* tagging */
@@ -57,6 +70,14 @@ static const Rule rules[] = {
 	{ TERMINAL,  NULL,     NULL,           0,         0,          1,           0,        -1 },
 	{ TERMINAL,  "spterm", NULL,	       SPTAG(0),  1,	      1,	   0,	     -1 },
 	{ TERMINAL,  "spcalc", NULL,	       SPTAG(1),  1,	      1,	   0,	     -1 },
+	{ TERMINAL,  "sptasks",NULL,	       SPTAG(2),  1,	      1,	   0,	     -1 },
+	{ TERMINAL,  "spkeepass",NULL,	       SPTAG(3),  1,	      1,	   0,	     -1 },
+	{ TERMINAL,  "splf",   NULL,	       SPTAG(4),  1,	      1,	   0,	     -1 },
+	{ TERMINAL,  "spmusic",NULL,	       SPTAG(5),  1,	      1,	   0,	     -1 },
+	{ TERMINAL,  "spweather",NULL,	       SPTAG(6),  1,	      1,	   0,	     -1 },
+	{ TERMINAL,  "spvolume",NULL,	       SPTAG(7),  1,	      1,	   0,	     -1 },
+	{ TERMINAL,  "spnetwork",NULL,	       SPTAG(8),  1,	      1,	   0,	     -1 },
+	{ TERMINAL,  "spresources",NULL,       SPTAG(9),  1,	      1,	   0,	     -1 },
 	{ NULL,      NULL,     "Event Tester", 0,         0,          0,           1,        -1 }, /* xev */
 	/* Uncomment to disable swallowing */
 //	{ "gimp",    NULL,     NULL,           0,         1,          0,           1,        -1 },
@@ -80,10 +101,10 @@ static const Layout all[]={{"[]=",tile },{"[M]",monocle },{"[@]",spiral },{"[\\]
 static const Layout layouts[] = {
 	/* symbol     arrange function */
 	{ "[]=",      tile },    /* first entry is default */
-	{ "[M]",      monocle },
 	{ "[@]",      spiral },
 	{ "[\\]",     dwindle },
 	{ "H[]",      deck },
+	{ "[M]",      monocle },
 	{ "TTT",      bstack },
 	{ "===",      bstackhoriz },
 	{ "HHH",      grid },
@@ -114,8 +135,8 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run",/* "-n", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4,*/ NULL };
 static const char *termcmd[]  = { TERMINAL, NULL };
-static const char *lfcmd[]  = { TERMINAL, "-e", "lf", NULL };
-static const char *musiccmd[]  = { TERMINAL, "-e", "ncmpcpp", NULL };
+//static const char *lfcmd[]  = { TERMINAL, "-e", "lf", NULL };
+//static const char *musiccmd[]  = { TERMINAL, "-e", "ncmpcpp", NULL };
 
 #include "movestack.c"
 #include "X11/XF86keysym.h"
@@ -123,7 +144,7 @@ static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,	                XK_Return, spawn,          {.v = termcmd } },
-	{ MODKEY,	                XK_f,      spawn,          {.v = lfcmd } },
+	//{ MODKEY,	                XK_f,      spawn,          {.v = lfcmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
@@ -137,13 +158,23 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_Return, zoom,           {0} },
 	{ MODKEY,			XK_comma,  cyclelayout,    {.i = -1 } },
 	{ MODKEY,		        XK_period, cyclelayout,    {.i = +1 } },
+
 	{ MODKEY|ShiftMask,		XK_s,  	   togglescratch,  {.ui = 0 } },
 	{ MODKEY|ShiftMask,		XK_x,  	   togglescratch,  {.ui = 1 } },
+	{ MODKEY|ShiftMask,		XK_t,  	   togglescratch,  {.ui = 2 } },
+	{ MODKEY|ShiftMask,		XK_p,  	   togglescratch,  {.ui = 3 } },
+	{ MODKEY|ShiftMask,		XK_f,  	   togglescratch,  {.ui = 4 } },
+	{ MODKEY|ShiftMask,		XK_m,  	   togglescratch,  {.ui = 5 } },
+	{ MODKEY|ShiftMask,		XK_w,  	   togglescratch,  {.ui = 6 } },
+	{ MODKEY|ShiftMask,		XK_v,  	   togglescratch,  {.ui = 7 } },
+	{ MODKEY|ShiftMask,		XK_n,  	   togglescratch,  {.ui = 8 } },
+	{ MODKEY|ShiftMask,		XK_r,  	   togglescratch,  {.ui = 9 } },
+
 	{ MODKEY,                       XK_s,      togglesticky,   {0} },
 	{ MODKEY|ShiftMask,             XK_e,      spawn,          {.v = (const char*[]){"dmenuunicode", NULL} } },
 	{ MODKEY|ShiftMask,             XK_c,      spawn,          {.v = (const char*[]){"clipmenu", NULL} } },
 	{ MODKEY|ShiftMask|ControlMask, XK_c,      spawn,          {.v = (const char*[]){"clear-clipboards", NULL} } },
-	{ MODKEY|ShiftMask,             XK_t,      spawn,          {.v = (const char*[]){"tasks", NULL} } },
+	//{ MODKEY|ShiftMask,             XK_t,      spawn,          {.v = (const char*[]){"tasks", NULL} } },
 	{ MODKEY|ShiftMask,             XK_q,      spawn,          {.v = (const char*[]){"sysact", NULL} } },
 	{ MODKEY|ControlMask,             XK_l,      spawn,          {.v = (const char*[]){"slock", NULL} } },
 //	{ MODKEY,      			XK_u,	   togglescratch,  {.ui = 1 } },
@@ -172,17 +203,17 @@ static Key keys[] = {
 //	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
 //	{ MODKEY,                       XK_space,  setlayout,      {0} },
 //	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
-	{ MODKEY|ShiftMask,             XK_f,      togglefullscr,  {0} },
+	{ LEFTALT,                      XK_f,      togglefullscr,  {0} },
 //	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
 //	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
 	/*{ Mod1Mask|ShiftMask|ControlMask,XK_comma, focusmon,       {.i = -1 } },
 	{ Mod1Mask|ShiftMask|ControlMask,XK_period,focusmon,       {.i = +1 } },
 	{ MODKEY|ShiftMask|ControlMask, XK_comma,  tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask|ControlMask, XK_period, tagmon,         {.i = +1 } },*/
-	{ Mod1Mask,						XK_h,	   focusmon,       {.i = -1 } },
-	{ Mod1Mask,						XK_l,	   focusmon,       {.i = +1 } },
-	{ Mod1Mask|ShiftMask,			XK_h,	   tagmon,         {.i = -1 } },
-	{ Mod1Mask|ShiftMask,			XK_l,	   tagmon,         {.i = +1 } },
+	{ LEFTALT,						XK_h,	   focusmon,       {.i = -1 } },
+	{ LEFTALT,						XK_l,	   focusmon,       {.i = +1 } },
+	{ LEFTALT|ShiftMask,			XK_h,	   tagmon,         {.i = -1 } },
+	{ LEFTALT|ShiftMask,			XK_l,	   tagmon,         {.i = +1 } },
 /*	{ MODKEY,                       XK_Page_Up,  viewnext,     {0} },
 	{ MODKEY,                       XK_Page_Down,viewprev,     {0} },
 	{ MODKEY|ShiftMask,             XK_Page_Up,  tagtonext,    {0} },
@@ -193,19 +224,29 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_h,      tagtoprev,      {0} },
 //	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
 	{ MODKEY|ControlMask|ShiftMask, XK_q,      quit,           {1} }, // Restart dwm
-	{ MODKEY|ControlMask,           XK_d,      spawn,          {.v = (const char*[]){"cycle-displays", NULL} } },
+                                                                      //
+
 	{ 0,XF86XK_MonBrightnessUp,                spawn,          {.v = (const char*[]){"brightness", "up", NULL} } },
 	{ 0,XF86XK_MonBrightnessDown,              spawn,          {.v = (const char*[]){"brightness", "down", NULL} } },
-	{ 0,XF86XK_Display,                        spawn,          {.v = (const char*[]){"cycle-displays", NULL} } },
-	{ 0,XF86XK_AudioRaiseVolume,               spawn,          SHCMD("amixer set Master 5%+ ; pkill -RTMIN+6 dwmblocks") },
-	{ 0,XF86XK_AudioLowerVolume,               spawn,          SHCMD("amixer set Master 5%- ; pkill -RTMIN+6 dwmblocks") },
-	{ 0,XF86XK_AudioMute,                      spawn,          SHCMD("amixer set Master 0% ; pkill -RTMIN+6 dwmblocks") },
+	{ 0,XF86XK_AudioRaiseVolume,               spawn,          SHCMD("pulsemixer --change-volume +5 ; pkill -RTMIN+6 dwmblocks") },
+	{ 0,XF86XK_AudioLowerVolume,               spawn,          SHCMD("pulsemixer --change-volume -5 ; pkill -RTMIN+6 dwmblocks") },
+	{ 0,XF86XK_AudioMute,                      spawn,          SHCMD("pulsemixer --toggle-mute ; pkill -RTMIN+6 dwmblocks") },
+
+	{ 0,XF86XK_Display,                        spawn,          {.v = (const char*[]){"video-output", NULL} } },
+	{ MODKEY|ControlMask,           XK_d,      spawn,          {.v = (const char*[]){"video-output", NULL} } },
+	{ ControlMask,                  XK_F7,     spawn,          {.v = (const char*[]){"audio-output", NULL} } },
+	{ MODKEY|ControlMask,           XK_a,      spawn,          {.v = (const char*[]){"audio-output", NULL} } },
+
 	{ MODKEY|ControlMask,           XK_F6,     spawn,          {.v = (const char*[]){"redlight", "up", NULL} } },
 	{ MODKEY|ControlMask,           XK_F5,     spawn,          {.v = (const char*[]){"redlight", "down", NULL} } },
-	{ MODKEY|ShiftMask,           XK_less,     spawn,          SHCMD("music next") },
-	{ MODKEY,           XK_less,     spawn,          SHCMD("music prev") },
-	{ MODKEY|ControlMask,           XK_p,     spawn,          SHCMD("music toggle") },
-	{ MODKEY|ControlMask,           XK_m,     spawn,          {.v = musiccmd} },
+
+	{ MODKEY|ShiftMask,             XK_less,   spawn,          SHCMD("music next") },
+	{ MODKEY,                       XK_less,   spawn,          SHCMD("music prev") },
+	//{ MODKEY,                       XK_m,      spawn,          SHCMD("music toggle") },
+	{ MODKEY|ControlMask,           XK_p,      spawn,          SHCMD("music toggle") },
+
+	{ MODKEY|ControlMask|ShiftMask, XK_p,      spawn,          {.v = (const char*[]){"power-profile", NULL} } },
+
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
