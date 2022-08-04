@@ -229,8 +229,10 @@ static Key keys[] = {
 	{ ControlMask,                  XK_F7,     spawn,          {.v = (const char*[]){"audio-output", NULL} } },
 	{ MODKEY|ControlMask,           XK_a,      spawn,          {.v = (const char*[]){"audio-output", NULL} } },
 
-	{ MODKEY|ControlMask,           XK_F6,     spawn,          {.v = (const char*[]){"redlight", "up", NULL} } },
-	{ MODKEY|ControlMask,           XK_F5,     spawn,          {.v = (const char*[]){"redlight", "down", NULL} } },
+	{ 0,XK_Print,                          spawn,              SHCMD("take-screenshot") },
+
+	{ ControlMask,                  XK_F6,     spawn,          {.v = (const char*[]){"redlight", "up", NULL} } },
+	{ ControlMask,                  XK_F5,     spawn,          {.v = (const char*[]){"redlight", "down", NULL} } },
 
 	{ MODKEY|ShiftMask,             XK_less,   spawn,          SHCMD("music next") },
 	{ MODKEY,                       XK_less,   spawn,          SHCMD("music prev") },
