@@ -8,7 +8,7 @@
 static const unsigned int borderpx  = 3;        /* border pixel of windows */
 static const unsigned int snap      = 16;       /* snap pixel */
 static const int swallowfloating    = 0;        /* 1 means swallow floating windows by default */
-static const int gap                = 30;
+static const int gap                = 10;
 static const unsigned int gappih    = gap;       /* horiz inner gap between windows */
 static const unsigned int gappiv    = gap;       /* vert inner gap between windows */
 static const unsigned int gappoh    = gap;       /* horiz outer gap between windows and screen edge */
@@ -18,18 +18,22 @@ static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 //static const char *fonts[]          = { "monospace:size=11", "NotoColorEmoji:pixelsize=12:antialias=true:autohint=true", "BitstreamVeraSansMono Nerd Font Mono:style=Roman:pixelsize=25:antialias=true:autohint=true" };
 static const char *fonts[]          = { "monospace:size=11", "BitstreamVeraSansMono Nerd Font Mono:style=Roman:pixelsize=25:antialias=true:autohint=true" };
-//static const char dmenufont[]       = "monospace:size=11";
-static const char col_gray1[]       = "#222222";
-static const char col_gray2[]       = "#444444";
-static const char col_gray3[]       = "#bbbbbb";
-static const char col_gray4[]       = "#eeeeee";
-static const char col_cyan[]        = "#005577";
-static const char col_scarlet[]     = "#9a2323";
-static const char *colors[][3]      = {
-	/*               fg         bg         border   */
-	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
-	[SchemeInv]  = { col_gray1, col_gray3, col_gray2 },
-	[SchemeSel]  = { col_gray4, col_cyan,  col_scarlet },
+static const char dmenufont[]       = "monospace:size=11";
+
+static char normbgcolor[]           = "#222222";
+static char normbordercolor[]       = "#444444";
+static char normfgcolor[]           = "#bbbbbb";
+static char selfgcolor[]            = "#eeeeee";
+static char selbordercolor[]        = "#005577";
+static char selbgcolor[]            = "#005577";
+static char col_red[]         = "#9a2323";
+static char col_white[]         = "#FFFFFF";
+static char *colors[][3] = {
+       /*               fg           bg           border   */
+       [SchemeNorm] = { normfgcolor, normbgcolor, normbordercolor },
+       //[SchemeSel]  = { selfgcolor,  selbgcolor,  col_red  },
+       [SchemeSel]  = { selfgcolor,  selbgcolor,  col_white  },
+       //[SchemeSel]  = { selfgcolor,  selbgcolor,  selbordercolor  },
 };
 
 typedef struct {
@@ -62,17 +66,24 @@ static Sp scratchpads[] = {
 
 /* tagging */
 static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
+//static const char *tags[] = { "", "", "", "V", "", "" };
 
 static const Rule rules[] = {
 	/* xprop(1):
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
+    /* USE FOLLOWING COMMAND TO GET WINDOW INFO
+    xprop | awk '
+	/^WM_CLASS/{sub(/.* =/, "instance:"); sub(/,/, "\nclass:"); print}
+	/^WM_NAME/{sub(/.* =/, "title:"); print}'
+     */
 	/* class     instance  title           tags mask  isfloating  isterminal  noswallow  monitor */
 	{ TERMINAL,  NULL,     NULL,           0,         0,          1,       0,        -1 },
 	{ TERMINAL,  "spterm", NULL,	       SPTAG(0),  1,	      1,	   0,	     -1 },
 	{ TERMINAL,  "spcalc", NULL,	       SPTAG(1),  1,	      1,	   0,	     -1 },
 	{ "Transmission-gtk", "transmission-gtk", "Transmission",      1 << 2,         0,	      0,	   0,	     -1 },
+	{ "firefox", "Navigator", "Mozilla Firefox",      1 << 1,         0,	      0,	   0,	     -1 },
 	/*{ TERMINAL,  "sptasks",NULL,	       SPTAG(2),  1,	      1,	   0,	     -1 },
 	{ TERMINAL,  "spkeepass",NULL,	       SPTAG(3),  1,	      1,	   0,	     -1 },
 	{ TERMINAL,  "splf",   NULL,	       SPTAG(4),  1,	      1,	   0,	     -1 },
@@ -89,7 +100,7 @@ static const Rule rules[] = {
 };
 
 /* layout(s) */
-static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
+static const float mfact     = 0.50; /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
 static const int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
 static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen window */
@@ -103,8 +114,8 @@ static const Layout all[]={{"[]=",tile },{"[M]",monocle },{"[@]",spiral },{"[\\]
 
 static const Layout layouts[] = {
 	/* symbol     arrange function */
-	{ "[]=",      tile },    /* first entry is default */
 	{ "[@]",      spiral },
+	{ "[]=",      tile },    /* first entry is default */
 	{ "[\\]",     dwindle },
 	{ "H[]",      deck },
 	{ "[M]",      monocle },
@@ -136,7 +147,9 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run",/* "-n", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4,*/ NULL };
+//static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
+static const char *dmenucmd[] = { "dmenu_run", NULL };
+//static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbordercolor, "-sf", selfgcolor, NULL };
 static const char *termcmd[]  = { TERMINAL, NULL };
 //static const char *lfcmd[]  = { TERMINAL, "-e", "lf", NULL };
 //static const char *musiccmd[]  = { TERMINAL, "-e", "ncmpcpp", NULL };
@@ -163,8 +176,8 @@ static Key keys[] = {
 
 	{ MODKEY|ShiftMask,		        XK_s,  	   togglescratch,  {.ui = 0 } },
 	{ MODKEY|ShiftMask,		        XK_x,  	   togglescratch,  {.ui = 1 } },
-	/*{ MODKEY|ShiftMask,		        XK_t,  	   togglescratch,  {.ui = 2 } },
-	{ MODKEY|ShiftMask,	        	XK_p,  	   togglescratch,  {.ui = 3 } },
+	/*{ MODKEY|ShiftMask,		        XK_p,  	   togglescratch,  {.ui = 2 } },
+	{ MODKEY|ShiftMask,	        	XK_t,  	   togglescratch,  {.ui = 3 } },
 	{ MODKEY|ShiftMask,	        	XK_f,  	   togglescratch,  {.ui = 4 } },
 	{ MODKEY|ShiftMask,     		XK_m,  	   togglescratch,  {.ui = 5 } },
 	{ MODKEY|ShiftMask,	        	XK_n,  	   togglescratch,  {.ui = 8 } },
@@ -174,8 +187,9 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,		        XK_t,  	   spawn,  SHCMD("setsid -f $TERMINAL -e tasks-wraper") },
 	{ MODKEY|ShiftMask,	        	XK_p,  	   spawn,  SHCMD("setsid -f $TERMINAL -e keepassxc") },
 	{ MODKEY|ShiftMask,	        	XK_f,  	   spawn,  SHCMD("setsid -f $TERMINAL -e lfrun") },
-	{ MODKEY|ShiftMask,	        	XK_w,  	   spawn,  SHCMD("setsid -f $TERMINAL -f monospace:size=9 -e less -Srf ~/.cache/weatherreport") },
-	{ MODKEY|ShiftMask,	        	XK_v,  	   spawn,  SHCMD("setsid -f $TERMINAL -e pulsemixer ; pkill -RTMIN+6 dwmblocks") },
+	//{ MODKEY|ShiftMask,	        	XK_w,  	   spawn,  SHCMD("setsid -f $TERMINAL -f monospace:size=9 -e less -Srf ~/.cache/weatherreport") },
+	{ MODKEY|ShiftMask,	        	XK_w,  	   spawn,  SHCMD("BLOCK_BUTTON=2 sb-forecast") },
+	{ MODKEY|ShiftMask,	        	XK_v,  	   spawn,  SHCMD("volume-control -c") },
 	{ MODKEY|ShiftMask,		        XK_r,  	   spawn,  SHCMD("setsid -f $TERMINAL -e htop") },
 	{ MODKEY|ShiftMask,	        	XK_i,  	   spawn,  SHCMD("setsid -f $TERMINAL -e nmtui ; pkill -RTMIN+4 dwmblocks") },
 	{ MODKEY|ShiftMask,		        XK_n,  	   spawn,  SHCMD("setsid -f $TERMINAL -e newsboat") },
@@ -188,7 +202,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask|ControlMask, XK_c,      spawn,          {.v = (const char*[]){"clear-clipboards", NULL} } },
 	{ MODKEY|ControlMask,           XK_r,      spawn,          {.v = (const char*[]){"remaps", NULL} } },
 	{ MODKEY|ShiftMask,             XK_q,      spawn,          {.v = (const char*[]){"sysact", NULL} } },
-	{ MODKEY|ControlMask,           XK_l,      spawn,          SHCMD("mpc pause ; slock") },
+	{ MODKEY|ControlMask,           XK_l,      spawn,          SHCMD("mpc pause ; slock ; music-control notify") },
 //	{ MODKEY|Mod4Mask,              XK_u,      incrgaps,       {.i = +1 } },
 //	{ MODKEY|Mod4Mask|ShiftMask,    XK_u,      incrgaps,       {.i = -1 } },
 //	{ MODKEY|Mod4Mask,              XK_o,      incrogaps,      {.i = +1 } },
@@ -220,11 +234,13 @@ static Key keys[] = {
 //	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
 	{ MODKEY|ControlMask|ShiftMask, XK_q,      quit,           {1} }, // Restart dwm
 
-	{ 0,XF86XK_MonBrightnessUp,                spawn,          {.v = (const char*[]){"brightness", "up", NULL} } },
-	{ 0,XF86XK_MonBrightnessDown,              spawn,          {.v = (const char*[]){"brightness", "down", NULL} } },
-	{ 0,XF86XK_AudioRaiseVolume,               spawn,          SHCMD("pulsemixer --change-volume +5 ; pkill -RTMIN+6 dwmblocks") },
-	{ 0,XF86XK_AudioLowerVolume,               spawn,          SHCMD("pulsemixer --change-volume -5 ; pkill -RTMIN+6 dwmblocks") },
-	{ 0,XF86XK_AudioMute,                      spawn,          SHCMD("pulsemixer --toggle-mute ; pkill -RTMIN+6 dwmblocks") },
+	{ 0,XF86XK_MonBrightnessUp,                spawn,          SHCMD("brightness up") },
+	{ 0,XF86XK_MonBrightnessDown,              spawn,          SHCMD("brightness down") },
+	{ ControlMask,                  XK_F1,     spawn,          SHCMD("brightness down") },
+	{ ControlMask,                  XK_F2,     spawn,          SHCMD("brightness up") },
+	{ 0,XF86XK_AudioRaiseVolume,               spawn,          SHCMD("volume-control -i") },
+	{ 0,XF86XK_AudioLowerVolume,               spawn,          SHCMD("volume-control -d") },
+	{ 0,XF86XK_AudioMute,                      spawn,          SHCMD("volume-control -t") },
 
 	{ 0,XF86XK_Display,                        spawn,          {.v = (const char*[]){"video-output", NULL} } },
 	{ MODKEY|ControlMask,           XK_d,      spawn,          {.v = (const char*[]){"video-output", NULL} } },
@@ -236,14 +252,14 @@ static Key keys[] = {
 	{ ControlMask,                  XK_F6,     spawn,          {.v = (const char*[]){"redlight", "up", NULL} } },
 	{ ControlMask,                  XK_F5,     spawn,          {.v = (const char*[]){"redlight", "down", NULL} } },
 
-	{ MODKEY|ShiftMask,             XK_less,   spawn,          SHCMD("music next") },
-	{ MODKEY,                       XK_less,   spawn,          SHCMD("music prev") },
-	{ MODKEY|ControlMask,           XK_p,      spawn,          SHCMD("music toggle") },
+	{ MODKEY|ShiftMask,             XK_less,   spawn,          SHCMD("music-control next") },
+	{ MODKEY,                       XK_less,   spawn,          SHCMD("music-control prev") },
+	{ MODKEY|ControlMask,           XK_p,      spawn,          SHCMD("music-control toggle") },
 
 	{ MODKEY|ControlMask|ShiftMask, XK_p,      spawn,          {.v = (const char*[]){"power-profile", NULL} } },
 
-	{ 0,XF86XK_WLAN,                           spawn,          {.v = (const char*[]){"wireless-toggle", "-w", NULL} } },
-	{ ControlMask,                  XK_F8,     spawn,          {.v = (const char*[]){"wireless-toggle", "-b", NULL} } },
+	{ 0,XF86XK_WLAN,                           spawn,          SHCMD("rfkill toggle wifi ; wireless-toggle -w") },
+	{ ControlMask,                  XK_F8,     spawn,          SHCMD("setsid -f wireless-toggle -b") },
 
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
@@ -268,6 +284,7 @@ static Button buttons[] = {
 	{ ClkStatusText,        0,              Button3,        sigdwmblocks,   {.i = 3} },
 	{ ClkStatusText,        0,              Button4,        sigdwmblocks,   {.i = 4} },
 	{ ClkStatusText,        0,              Button5,        sigdwmblocks,   {.i = 5} },
+	{ ClkStatusText,        ShiftMask,      Button2,        sigdwmblocks,   {.i = 6} }, // Shift + Middle-click
 	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
 	{ ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
 	{ ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} },
