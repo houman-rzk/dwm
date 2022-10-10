@@ -2,7 +2,7 @@
 
 /* Constants */
 #define TERMINAL "st"
-//#define TERMCLASS "St"
+#define TERMCLASS "St"
 
 /* appearance */
 static const unsigned int borderpx  = 3;        /* border pixel of windows */
@@ -17,8 +17,8 @@ static       int smartgaps          = 0;        /* 1 means no outer gap when the
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 //static const char *fonts[]          = { "monospace:size=11", "NotoColorEmoji:pixelsize=12:antialias=true:autohint=true", "BitstreamVeraSansMono Nerd Font Mono:style=Roman:pixelsize=25:antialias=true:autohint=true" };
-static const char *fonts[]          = { "monospace:size=11", "BitstreamVeraSansMono Nerd Font Mono:style=Roman:pixelsize=25:antialias=true:autohint=true" };
-static const char dmenufont[]       = "monospace:size=11";
+static const char *fonts[]          = { "monospace:size=10", "BitstreamVeraSansMono Nerd Font Mono:style=Roman:pixelsize=20:antialias=true:autohint=true" };
+static const char dmenufont[]       = "monospace:size=10";
 
 static char normbgcolor[]           = "#222222";
 static char normbordercolor[]       = "#444444";
@@ -26,14 +26,14 @@ static char normfgcolor[]           = "#bbbbbb";
 static char selfgcolor[]            = "#eeeeee";
 static char selbordercolor[]        = "#005577";
 static char selbgcolor[]            = "#005577";
-static char col_red[]         = "#9a2323";
-static char col_white[]         = "#FFFFFF";
+//static char col_red[]         = "#9a2323";
+//static char col_white[]         = "#FFFFFF";
 static char *colors[][3] = {
        /*               fg           bg           border   */
        [SchemeNorm] = { normfgcolor, normbgcolor, normbordercolor },
        //[SchemeSel]  = { selfgcolor,  selbgcolor,  col_red  },
-       [SchemeSel]  = { selfgcolor,  selbgcolor,  col_white  },
-       //[SchemeSel]  = { selfgcolor,  selbgcolor,  selbordercolor  },
+       //[SchemeSel]  = { selfgcolor,  selbgcolor,  col_white  },
+       [SchemeSel]  = { selfgcolor,  selbgcolor,  selbordercolor  },
 };
 
 typedef struct {
@@ -79,9 +79,9 @@ static const Rule rules[] = {
 	/^WM_NAME/{sub(/.* =/, "title:"); print}'
      */
 	/* class     instance  title           tags mask  isfloating  isterminal  noswallow  monitor */
-	{ TERMINAL,  NULL,     NULL,           0,         0,          1,       0,        -1 },
-	{ TERMINAL,  "spterm", NULL,	       SPTAG(0),  1,	      1,	   0,	     -1 },
-	{ TERMINAL,  "spcalc", NULL,	       SPTAG(1),  1,	      1,	   0,	     -1 },
+    { TERMINAL,  NULL,     NULL,           0,         0,          1,       0,        -1 },
+	{ TERMCLASS,  "spterm", NULL,	       SPTAG(0),  1,	      1,	   0,	     -1 },
+	{ TERMCLASS,  "spcalc", NULL,	       SPTAG(1),  1,	      1,	   0,	     -1 },
 	{ "Transmission-gtk", "transmission-gtk", "Transmission",      1 << 2,         0,	      0,	   0,	     -1 },
 	{ "firefox", "Navigator", "Mozilla Firefox",      1 << 1,         0,	      0,	   0,	     -1 },
 	/*{ TERMINAL,  "sptasks",NULL,	       SPTAG(2),  1,	      1,	   0,	     -1 },
@@ -103,7 +103,7 @@ static const Rule rules[] = {
 static const float mfact     = 0.50; /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
 static const int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
-static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen window */
+static const int lockfullscreen = 0; /* 1 will force focus on the fullscreen window */
 
 #define FORCE_VSPLIT 1  /* nrowgrid layout: force two clients to always split vertically */
 #include "vanitygaps.c"
@@ -187,6 +187,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,		        XK_t,  	   spawn,  SHCMD("setsid -f $TERMINAL -e tasks-wraper") },
 	{ MODKEY|ShiftMask,	        	XK_p,  	   spawn,  SHCMD("setsid -f $TERMINAL -e keepassxc") },
 	{ MODKEY|ShiftMask,	        	XK_f,  	   spawn,  SHCMD("setsid -f $TERMINAL -e lfrun") },
+	{ MODKEY|ShiftMask,	        	XK_b,  	   spawn,  SHCMD("setsid -f firefox") },
 	//{ MODKEY|ShiftMask,	        	XK_w,  	   spawn,  SHCMD("setsid -f $TERMINAL -f monospace:size=9 -e less -Srf ~/.cache/weatherreport") },
 	{ MODKEY|ShiftMask,	        	XK_w,  	   spawn,  SHCMD("BLOCK_BUTTON=2 sb-forecast") },
 	{ MODKEY|ShiftMask,	        	XK_v,  	   spawn,  SHCMD("volume-control -c") },
@@ -247,7 +248,8 @@ static Key keys[] = {
 	{ ControlMask,                  XK_F7,     spawn,          {.v = (const char*[]){"audio-output", NULL} } },
 	{ MODKEY|ControlMask,           XK_a,      spawn,          {.v = (const char*[]){"audio-output", NULL} } },
 
-	{ 0,XK_Print,                          spawn,              SHCMD("take-screenshot") },
+	//{ MODKEY,                       XK_Print,  spawn,          SHCMD("take-screenshot") },
+	{ MODKEY,                       XK_Print,  spawn,          {.v = (const char*[]){"take-screenshot", NULL} } },
 
 	{ ControlMask,                  XK_F6,     spawn,          {.v = (const char*[]){"redlight", "up", NULL} } },
 	{ ControlMask,                  XK_F5,     spawn,          {.v = (const char*[]){"redlight", "down", NULL} } },
@@ -260,6 +262,8 @@ static Key keys[] = {
 
 	{ 0,XF86XK_WLAN,                           spawn,          SHCMD("rfkill toggle wifi ; wireless-toggle -w") },
 	{ ControlMask,                  XK_F8,     spawn,          SHCMD("setsid -f wireless-toggle -b") },
+
+    { MODKEY,                       XK_F5,     xrdb,           {.v = NULL } },
 
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
