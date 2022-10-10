@@ -1069,6 +1069,10 @@ focus(Client *c)
 			selmon = c->mon;
 		if (c->isurgent)
 			seturgent(c, 0);
+
+        detachstack(c);
+        attachstack(c);
+
 		grabbuttons(c, 1);
 		XSetWindowBorder(dpy, c->win, scheme[SchemeSel][ColBorder].pixel);
 		setfocus(c);
@@ -2381,9 +2385,12 @@ unmanage(Client *c, int destroyed)
 
 	if (!s) {
 		arrange(m);
+        //focus(NULL);
+        
 		focus(nc);
 		if(fullscreen)
     		togglefullscr(0);
+
 		updateclientlist();
 	}
 }
