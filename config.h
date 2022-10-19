@@ -24,7 +24,8 @@ static char normbgcolor[]           = "#222222";
 static char normbordercolor[]       = "#444444";
 static char normfgcolor[]           = "#bbbbbb";
 static char selfgcolor[]            = "#eeeeee";
-static char selbordercolor[]        = "#005577";
+//static char selbordercolor[]        = "#005577";
+static char selbordercolor[]        = "#9a2323";
 static char selbgcolor[]            = "#005577";
 //static char col_red[]         = "#9a2323";
 //static char col_white[]         = "#FFFFFF";
@@ -79,7 +80,7 @@ static const Rule rules[] = {
 	/^WM_NAME/{sub(/.* =/, "title:"); print}'
      */
 	/* class     instance  title           tags mask  isfloating  isterminal  noswallow  monitor */
-    { TERMINAL,  NULL,     NULL,           0,         0,          1,       0,        -1 },
+    { TERMCLASS,  NULL,     NULL,           0,         0,          1,       0,        -1 },
 	{ TERMCLASS,  "spterm", NULL,	       SPTAG(0),  1,	      1,	   0,	     -1 },
 	{ TERMCLASS,  "spcalc", NULL,	       SPTAG(1),  1,	      1,	   0,	     -1 },
 	{ "Transmission-gtk", "transmission-gtk", "Transmission",      1 << 2,         0,	      0,	   0,	     -1 },
@@ -185,7 +186,7 @@ static Key keys[] = {
 
 	//{ MODKEY|ShiftMask,		        XK_x,  	   spawn,  SHCMD("setsid -f $TERMINAL -e bc -lq") },
 	{ MODKEY|ShiftMask,		        XK_t,  	   spawn,  SHCMD("setsid -f $TERMINAL -e tasks-wraper") },
-	{ MODKEY|ShiftMask,	        	XK_p,  	   spawn,  SHCMD("setsid -f $TERMINAL -e keepassxc") },
+	{ MODKEY|ShiftMask,	        	XK_p,  	   spawn,  SHCMD("keepassxc") },
 	{ MODKEY|ShiftMask,	        	XK_f,  	   spawn,  SHCMD("setsid -f $TERMINAL -e lfrun") },
 	{ MODKEY|ShiftMask,	        	XK_b,  	   spawn,  SHCMD("setsid -f firefox") },
 	//{ MODKEY|ShiftMask,	        	XK_w,  	   spawn,  SHCMD("setsid -f $TERMINAL -f monospace:size=9 -e less -Srf ~/.cache/weatherreport") },
@@ -220,6 +221,7 @@ static Key keys[] = {
 //	{ MODKEY|Mod4Mask|ShiftMask,    XK_0,      defaultgaps,    {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
 	{ MODKEY,	                    XK_c,      killclient,     {0} },
+	//{ MODKEY,	                    XK_q,      killclient,     {0} },
 	{ LEFTALT|ShiftMask,            XK_x,      killunsel,      {0} },
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_u,      togglefloating, {0} },
