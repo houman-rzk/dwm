@@ -17,8 +17,9 @@ static       int smartgaps          = 0;        /* 1 means no outer gap when the
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 //static const char *fonts[]          = { "monospace:size=11", "NotoColorEmoji:pixelsize=12:antialias=true:autohint=true", "BitstreamVeraSansMono Nerd Font Mono:style=Roman:pixelsize=25:antialias=true:autohint=true" };
-static const char *fonts[]          = { "monospace:size=10", "BitstreamVeraSansMono Nerd Font Mono:style=Roman:pixelsize=20:antialias=true:autohint=true" };
-static const char dmenufont[]       = "monospace:size=10";
+static const char *fonts[]          = { "monospace:size=11", "BitstreamVeraSansMono Nerd Font Mono:style=Roman:pixelsize=20:antialias=true:autohint=true" };
+//static const char *fonts[]          = { "monospace:size=10", "BitstreamVeraSansMono Nerd Font Mono:style=Roman:pixelsize=20:antialias=true:autohint=true" };
+static const char dmenufont[]       = "monospace:size=11";
 
 static char normbgcolor[]           = "#222222";
 static char normbordercolor[]       = "#444444";
@@ -42,8 +43,8 @@ typedef struct {
 	const void *cmd;
 } Sp;
 const char *spcmd1[] = {TERMINAL, "-n", "spterm", "-g", "120x24", NULL };
-const char *spcmd2[] = {TERMINAL, "-n", "spcalc", "-g", "50x20",  "-f", "monospace:size=16", "-e", "bc", "-lq", NULL };
-/*const char *spcmd3[] = {TERMINAL, "-n", "sptasks", "-g", "120x34", "-e", "tasks-wraper", NULL };
+/*const char *spcmd2[] = {TERMINAL, "-n", "spcalc", "-g", "50x20",  "-f", "monospace:size=16", "-e", "bc", "-lq", NULL };
+const char *spcmd3[] = {TERMINAL, "-n", "sptasks", "-g", "120x34", "-e", "tasks-wraper", NULL };
 const char *spcmd4[] = {TERMINAL, "-n", "spkeepass", "-g", "120x34", "-e", "keepassxc", NULL };
 const char *spcmd5[] = {TERMINAL, "-n", "splf", "-g", "120x34", "-e", "lfrun", NULL };
 const char *spcmd6[] = {TERMINAL, "-n", "spmusic", "-g", "120x34", "-e", "ncmpcpp", NULL };
@@ -54,8 +55,8 @@ const char *spcmd10[] = {TERMINAL, "-n", "spresources", "-g", "120x34", "-e", "h
 static Sp scratchpads[] = {
 	/* name          cmd  */
 	{"spterm",      spcmd1},
-	{"spcalc",      spcmd2},
-	/*{"sptasks",     spcmd3},
+	/*{"spcalc",      spcmd2},
+	{"sptasks",     spcmd3},
 	{"spkeepass",   spcmd4},
 	{"splf",        spcmd5},
 	{"spmusic",     spcmd6},
@@ -81,8 +82,8 @@ static const Rule rules[] = {
      */
 	/* class     instance  title           tags mask  isfloating  isterminal  noswallow  monitor */
     { TERMCLASS,  NULL,     NULL,           0,         0,          1,       0,        -1 },
-	{ TERMCLASS,  "spterm", NULL,	       SPTAG(0),  1,	      1,	   0,	     -1 },
-	{ TERMCLASS,  "spcalc", NULL,	       SPTAG(1),  1,	      1,	   0,	     -1 },
+	/*{ TERMCLASS,  "spterm", NULL,	       SPTAG(0),  1,	      1,	   0,	     -1 },
+	{ TERMCLASS,  "spcalc", NULL,	       SPTAG(1),  1,	      1,	   0,	     -1 },*/
 	{ "Transmission-gtk", "transmission-gtk", "Transmission",      1 << 3,         0,	      0,	   0,	     -1 },
 	{ "firefox", "Navigator", "Mozilla Firefox",      1 << 2,         0,	      0,	   0,	     -1 },
 	/*{ TERMINAL,  "sptasks",NULL,	       SPTAG(2),  1,	      1,	   0,	     -1 },
@@ -149,7 +150,8 @@ static const Layout layouts[] = {
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 //static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
-static const char *dmenucmd[] = { "dmenu_run", NULL };
+static const char *dmenucmd[] = { "dmenu_run", "-i", NULL };
+//static const char *dmenucmd[] = { "dmenu_run", NULL };
 //static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbordercolor, "-sf", selfgcolor, NULL };
 static const char *termcmd[]  = { TERMINAL, NULL };
 //static const char *lfcmd[]  = { TERMINAL, "-e", "lf", NULL };
@@ -175,16 +177,16 @@ static Key keys[] = {
 	{ MODKEY,			            XK_comma,  cyclelayout,    {.i = -1 } },
 	{ MODKEY,		                XK_period, cyclelayout,    {.i = +1 } },
 
-	{ MODKEY|ShiftMask,		        XK_s,  	   togglescratch,  {.ui = 0 } },
+	/*{ MODKEY|ShiftMask,		        XK_s,  	   togglescratch,  {.ui = 0 } },
 	{ MODKEY|ShiftMask,		        XK_x,  	   togglescratch,  {.ui = 1 } },
-	/*{ MODKEY|ShiftMask,		        XK_p,  	   togglescratch,  {.ui = 2 } },
+	{ MODKEY|ShiftMask,		        XK_p,  	   togglescratch,  {.ui = 2 } },
 	{ MODKEY|ShiftMask,	        	XK_t,  	   togglescratch,  {.ui = 3 } },
 	{ MODKEY|ShiftMask,	        	XK_f,  	   togglescratch,  {.ui = 4 } },
 	{ MODKEY|ShiftMask,     		XK_m,  	   togglescratch,  {.ui = 5 } },
 	{ MODKEY|ShiftMask,	        	XK_n,  	   togglescratch,  {.ui = 8 } },
 	{ MODKEY|ShiftMask,		        XK_r,  	   togglescratch,  {.ui = 9 } },*/
 
-	//{ MODKEY|ShiftMask,		        XK_x,  	   spawn,  SHCMD("setsid -f $TERMINAL -e bc -lq") },
+	{ MODKEY|ShiftMask,		        XK_x,  	   spawn,  SHCMD("setsid -f $TERMINAL -e bc -lq") },
 	{ MODKEY|ShiftMask,		        XK_t,  	   spawn,  SHCMD("setsid -f $TERMINAL -e tasks-wraper") },
 	{ MODKEY|ShiftMask,	        	XK_p,  	   spawn,  SHCMD("keepassxc") },
 	{ MODKEY|ShiftMask,	        	XK_f,  	   spawn,  SHCMD("setsid -f $TERMINAL -e multi-lf") },
@@ -197,7 +199,9 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,		        XK_n,  	   spawn,  SHCMD("setsid -f $TERMINAL -e newsboat") },
 	{ MODKEY|ShiftMask,     		XK_m,  	   spawn,  SHCMD("setsid -f $TERMINAL -e ncmpcpp ; pkill -RTMIN+7 dwmblocks") },
 	{ MODKEY|ControlMask,    		XK_m,  	   spawn,  SHCMD("setsid -f $TERMINAL -e neomutt") },
-	{ MODKEY,    		            XK_v,  	   spawn,  SHCMD("setsid -f $TERMINAL -e $EDITOR") },
+	{ MODKEY|ControlMask,    		XK_b,  	   spawn,  SHCMD("update-dwmblocks") },
+	{ MODKEY|ControlMask|ShiftMask, XK_b,  	   spawn,  SHCMD("update-dwmblocks -r") },
+	{ MODKEY,    		            XK_v,  	   spawn,  SHCMD("setsid -f $TERMINAL -e $EDITOR -c 'startinsert'") },
 	{ LEFTALT,		                XK_space,  spawn,  SHCMD("toggle-all-mpv") },
 
 	{ MODKEY,                       XK_s,      togglesticky,   {0} },
@@ -297,6 +301,7 @@ static Button buttons[] = {
 	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
 	{ ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
 	{ ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} },
+	{ ClkClientWin,         MODKEY|LEFTALT, Button1,        resizemouse,    {0} },
 	{ ClkTagBar,            0,              Button1,        view,           {0} },
 	{ ClkTagBar,            0,              Button3,        toggleview,     {0} },
 	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
