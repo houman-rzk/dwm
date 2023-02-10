@@ -85,7 +85,10 @@ static const Rule rules[] = {
 	/*{ TERMCLASS,  "spterm", NULL,	       SPTAG(0),  1,	      1,	   0,	     -1 },
 	{ TERMCLASS,  "spcalc", NULL,	       SPTAG(1),  1,	      1,	   0,	     -1 },*/
 	{ "Transmission-gtk", "transmission-gtk", "Transmission",      1 << 3,         0,	      0,	   0,	     -1 },
-	{ "firefox", "Navigator", "Mozilla Firefox",      1 << 2,         0,	      0,	   0,	     -1 },
+	//{ "firefox", "Navigator", "Mozilla Firefox",      1 << 2,         0,	      0,	   0,	     -1 },
+	{ "firefox", "Navigator", "Mozilla Firefox",      1 << 1,         0,	      0,	   0,	     -1 },
+	//{ "Tor Browser", "Navigator", NULL,      1 << 1,         1,	      0,	   0,	     -1 },
+	{ "Tor Browser", "Navigator", NULL,      1 << 2,         1,	      0,	   0,	     -1 },
 	/*{ TERMINAL,  "sptasks",NULL,	       SPTAG(2),  1,	      1,	   0,	     -1 },
 	{ TERMINAL,  "spkeepass",NULL,	       SPTAG(3),  1,	      1,	   0,	     -1 },
 	{ TERMINAL,  "splf",   NULL,	       SPTAG(4),  1,	      1,	   0,	     -1 },
@@ -271,6 +274,8 @@ static Key keys[] = {
 
 	{ 0,XF86XK_WLAN,                           spawn,          SHCMD("rfkill toggle wifi ; wireless-toggle -w") },
 	{ ControlMask,                  XK_F8,     spawn,          SHCMD("setsid -f wireless-toggle -b") },
+	{ LEFTALT|MODKEY|ControlMask|ShiftMask,                  XK_s,     spawn,          SHCMD("setbg") },
+	{ LEFTALT|MODKEY|ControlMask|ShiftMask,                  XK_d,     spawn,          SHCMD("delete-current-wallpaper") },
 
     { MODKEY,                       XK_F5,     xrdb,           {.v = NULL } },
 
