@@ -120,19 +120,19 @@ static const Layout all[]={{"[]=",tile },{"[M]",monocle },{"[@]",spiral },{"[\\]
 static const Layout layouts[] = {
 	/* symbol     arrange function */
 	{ "[@]",      spiral },
-	{ "[]=",      tile },    /* first entry is default */
-	{ "[\\]",     dwindle },
-	{ "H[]",      deck },
+	{ ":::",      gaplessgrid },
+	{ "[]=",      tile },
+	{ "---",      horizgrid },
 	{ "[M]",      monocle },
 	{ "TTT",      bstack },
-	{ "===",      bstackhoriz },
-	{ "HHH",      grid },
-	{ "###",      nrowgrid },
-	{ "---",      horizgrid },
-	{ ":::",      gaplessgrid },
 	{ "|M|",      centeredmaster },
-	{ ">M>",      centeredfloatingmaster },
-	{ "><>",      NULL },    /* no layout function means floating behavior */
+	//{ "###",      nrowgrid },
+	//{ "[\\]",     dwindle },
+	//{ "H[]",      deck },
+	//{ "===",      bstackhoriz },
+	//{ "HHH",      grid },
+	//{ ">M>",      centeredfloatingmaster },
+	//{ "><>",      NULL },
 	{ NULL,       NULL },
 };
 
