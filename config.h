@@ -42,7 +42,7 @@ typedef struct {
 	const char *name;
 	const void *cmd;
 } Sp;
-const char *spcmd1[] = {TERMINAL, "-n", "spterm", "-g", "120x24", NULL };
+const char *spcmd1[] = {TERMINAL, "-n", "spterm", "-g", "180x36", NULL };
 /*const char *spcmd2[] = {TERMINAL, "-n", "spcalc", "-g", "50x20",  "-f", "monospace:size=16", "-e", "bc", "-lq", NULL };
 const char *spcmd3[] = {TERMINAL, "-n", "sptasks", "-g", "120x34", "-e", "tasks-wraper", NULL };
 const char *spcmd4[] = {TERMINAL, "-n", "spkeepass", "-g", "120x34", "-e", "keepassxc", NULL };
@@ -82,13 +82,14 @@ static const Rule rules[] = {
      */
 	/* class     instance  title           tags mask  isfloating  isterminal  noswallow  monitor */
     { TERMCLASS,  NULL,     NULL,           0,         0,          1,       0,        -1 },
-	/*{ TERMCLASS,  "spterm", NULL,	       SPTAG(0),  1,	      1,	   0,	     -1 },
-	{ TERMCLASS,  "spcalc", NULL,	       SPTAG(1),  1,	      1,	   0,	     -1 },*/
+	{ TERMCLASS,  "spterm", NULL,	       SPTAG(0),  1,	      1,	   0,	     -1 },
+	/*{ TERMCLASS,  "spcalc", NULL,	       SPTAG(1),  1,	      1,	   0,	     -1 },*/
 	{ "Transmission-gtk", "transmission-gtk", "Transmission",      1 << 3,         0,	      0,	   0,	     -1 },
 	//{ "firefox", "Navigator", "Mozilla Firefox",      1 << 2,         0,	      0,	   0,	     -1 },
 	{ "firefox", "Navigator", "Mozilla Firefox",      1 << 1,         0,	      0,	   0,	     -1 },
 	//{ "Tor Browser", "Navigator", NULL,      1 << 1,         1,	      0,	   0,	     -1 },
 	{ "Tor Browser", "Navigator", NULL,      1 << 2,         1,	      0,	   0,	     -1 },
+	{ "floating", TERMINAL, NULL,	         1 << 2,  1,	      1,	   0,	     -1 },
 	/*{ TERMINAL,  "sptasks",NULL,	       SPTAG(2),  1,	      1,	   0,	     -1 },
 	{ TERMINAL,  "spkeepass",NULL,	       SPTAG(3),  1,	      1,	   0,	     -1 },
 	{ TERMINAL,  "splf",   NULL,	       SPTAG(4),  1,	      1,	   0,	     -1 },
@@ -132,7 +133,7 @@ static const Layout layouts[] = {
 	//{ "===",      bstackhoriz },
 	//{ "HHH",      grid },
 	//{ ">M>",      centeredfloatingmaster },
-	//{ "><>",      NULL },
+	{ "><>",      NULL },
 	{ NULL,       NULL },
 };
 
@@ -180,8 +181,8 @@ static Key keys[] = {
 	{ MODKEY,			            XK_comma,  cyclelayout,    {.i = -1 } },
 	{ MODKEY,		                XK_period, cyclelayout,    {.i = +1 } },
 
-	/*{ MODKEY|ShiftMask,		        XK_s,  	   togglescratch,  {.ui = 0 } },
-	{ MODKEY|ShiftMask,		        XK_x,  	   togglescratch,  {.ui = 1 } },
+	{ MODKEY|ShiftMask,		        XK_s,  	   togglescratch,  {.ui = 0 } },
+	/*{ MODKEY|ShiftMask,		        XK_x,  	   togglescratch,  {.ui = 1 } },
 	{ MODKEY|ShiftMask,		        XK_p,  	   togglescratch,  {.ui = 2 } },
 	{ MODKEY|ShiftMask,	        	XK_t,  	   togglescratch,  {.ui = 3 } },
 	{ MODKEY|ShiftMask,	        	XK_f,  	   togglescratch,  {.ui = 4 } },
@@ -191,7 +192,8 @@ static Key keys[] = {
 
 	{ MODKEY|ShiftMask,		        XK_x,  	   spawn,  SHCMD("setsid -f $TERMINAL -e bc -lq") },
 	{ MODKEY|ShiftMask,		        XK_t,  	   spawn,  SHCMD("setsid -f $TERMINAL -e tasks-wraper") },
-	{ MODKEY|ShiftMask,	        	XK_p,  	   spawn,  SHCMD("keepassxc") },
+	//{ MODKEY|ShiftMask,	        	XK_p,  	   spawn,  SHCMD("keepassxc") },
+	{ MODKEY|ShiftMask,	        	XK_p,  	   spawn,  SHCMD("setsid -f passmenu -c") },
 	{ MODKEY|ShiftMask,	        	XK_f,  	   spawn,  SHCMD("setsid -f $TERMINAL -e multi-lf") },
 	{ MODKEY|ShiftMask,	        	XK_b,  	   spawn,  SHCMD("setsid -f firefox") },
 	//{ MODKEY|ShiftMask,	        	XK_w,  	   spawn,  SHCMD("setsid -f $TERMINAL -f monospace:size=9 -e less -Srf ~/.cache/weatherreport") },

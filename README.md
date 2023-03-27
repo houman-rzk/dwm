@@ -12,6 +12,10 @@ Comes with the best selection of tiling layouts.
 Supports pywal and emojis.
 
 
+## Installation
+Clone the repo and run `m̀ake && sudo make install`.
+
+
 ## Patches
 - showselmon
 - statusallmons
