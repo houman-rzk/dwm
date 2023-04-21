@@ -17,7 +17,8 @@ static       int smartgaps          = 0;        /* 1 means no outer gap when the
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 //static const char *fonts[]          = { "monospace:size=11", "NotoColorEmoji:pixelsize=12:antialias=true:autohint=true", "BitstreamVeraSansMono Nerd Font Mono:style=Roman:pixelsize=25:antialias=true:autohint=true" };
-static const char *fonts[]          = { "monospace:size=11", "BitstreamVeraSansMono Nerd Font Mono:style=Roman:pixelsize=20:antialias=true:autohint=true" };
+//static const char *fonts[]          = { "monospace:size=11", "BitstreamVeraSansMono Nerd Font Mono:style=Roman:pixelsize=20:antialias=true:autohint=true" };
+static const char *fonts[]          = { "Source Code Pro:size=11", "BitstreamVeraSansMono Nerd Font Mono:style=Roman:pixelsize=20:antialias=true:autohint=true" };
 //static const char *fonts[]          = { "monospace:size=10", "BitstreamVeraSansMono Nerd Font Mono:style=Roman:pixelsize=20:antialias=true:autohint=true" };
 static const char dmenufont[]       = "monospace:size=11";
 
@@ -81,10 +82,11 @@ static const Rule rules[] = {
 	/^WM_NAME/{sub(/.* =/, "title:"); print}'
      */
 	/* class     instance  title           tags mask  isfloating  isterminal  noswallow  monitor */
-    { TERMCLASS,  NULL,     NULL,           0,         0,          1,       0,        -1 },
+  { TERMCLASS,  NULL,     NULL,           0,         0,          1,       0,        -1 },
 	{ TERMCLASS,  "spterm", NULL,	       SPTAG(0),  1,	      1,	   0,	     -1 },
 	/*{ TERMCLASS,  "spcalc", NULL,	       SPTAG(1),  1,	      1,	   0,	     -1 },*/
 	{ "Transmission-gtk", "transmission-gtk", "Transmission",      1 << 3,         0,	      0,	   0,	     -1 },
+	//{ "passmenuPasswordEntry", NULL, NULL,  0,         1,	      0,	   0,	     -1 },
 	//{ "firefox", "Navigator", "Mozilla Firefox",      1 << 2,         0,	      0,	   0,	     -1 },
 	{ "firefox", "Navigator", "Mozilla Firefox",      1 << 1,         0,	      0,	   0,	     -1 },
 	//{ "Tor Browser", "Navigator", NULL,      1 << 1,         1,	      0,	   0,	     -1 },
@@ -120,10 +122,10 @@ static const Layout all[]={{"[]=",tile },{"[M]",monocle },{"[@]",spiral },{"[\\]
 
 static const Layout layouts[] = {
 	/* symbol     arrange function */
-	{ "[@]",      spiral },
 	{ ":::",      gaplessgrid },
-	{ "[]=",      tile },
 	{ "---",      horizgrid },
+	{ "[@]",      spiral },
+	{ "[]=",      tile },
 	{ "[M]",      monocle },
 	{ "TTT",      bstack },
 	{ "|M|",      centeredmaster },
@@ -193,7 +195,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,		        XK_x,  	   spawn,  SHCMD("setsid -f $TERMINAL -e bc -lq") },
 	{ MODKEY|ShiftMask,		        XK_t,  	   spawn,  SHCMD("setsid -f $TERMINAL -e tasks-wraper") },
 	//{ MODKEY|ShiftMask,	        	XK_p,  	   spawn,  SHCMD("keepassxc") },
-	{ MODKEY|ShiftMask,	        	XK_p,  	   spawn,  SHCMD("pm") },
+	{ MODKEY|ShiftMask,	        	XK_p,  	   spawn,  SHCMD("setsid -f passmenu --type -c") },
 	{ MODKEY|ShiftMask,	        	XK_f,  	   spawn,  SHCMD("setsid -f $TERMINAL -e multi-lf") },
 	{ MODKEY|ShiftMask,	        	XK_b,  	   spawn,  SHCMD("setsid -f firefox") },
 	//{ MODKEY|ShiftMask,	        	XK_w,  	   spawn,  SHCMD("setsid -f $TERMINAL -f monospace:size=9 -e less -Srf ~/.cache/weatherreport") },
