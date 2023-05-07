@@ -16,11 +16,10 @@ static const unsigned int gappov    = gap;       /* vert outer gap between windo
 static       int smartgaps          = 0;        /* 1 means no outer gap when there is only one window */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-//static const char *fonts[]          = { "monospace:size=11", "NotoColorEmoji:pixelsize=12:antialias=true:autohint=true", "BitstreamVeraSansMono Nerd Font Mono:style=Roman:pixelsize=25:antialias=true:autohint=true" };
-//static const char *fonts[]          = { "monospace:size=11", "BitstreamVeraSansMono Nerd Font Mono:style=Roman:pixelsize=20:antialias=true:autohint=true" };
-static const char *fonts[]          = { "Source Code Pro:size=11", "BitstreamVeraSansMono Nerd Font Mono:style=Roman:pixelsize=20:antialias=true:autohint=true" };
-//static const char *fonts[]          = { "monospace:size=10", "BitstreamVeraSansMono Nerd Font Mono:style=Roman:pixelsize=20:antialias=true:autohint=true" };
-static const char dmenufont[]       = "monospace:size=11";
+//static const char *fonts[]          = { "Source Code Pro:size=11", "BitstreamVeraSansMono Nerd Font Mono:style=Roman:pixelsize=20:antialias=true:autohint=true" };
+//static const char *fonts[]          = { "Source Code Pro:size=11", "BitstromWera Nerd Font Mono:style=Regular:pixelsize=20:antialias=true:autohint=true" };
+static const char *fonts[]          = { "Source Code Pro:size=11"};
+static const char dmenufont[]       = "Source Code Pro:size=11";
 
 static char normbgcolor[]           = "#222222";
 static char normbordercolor[]       = "#444444";
