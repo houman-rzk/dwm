@@ -122,8 +122,8 @@ static const Layout all[]={{"[]=",tile },{"[M]",monocle },{"[@]",spiral },{"[\\]
 static const Layout layouts[] = {
 	/* symbol     arrange function */
 	{ ":::",      gaplessgrid },
-	{ "---",      horizgrid },
 	{ "[@]",      spiral },
+	{ "---",      horizgrid },
 	{ "[]=",      tile },
 	{ "[M]",      monocle },
 	{ "TTT",      bstack },
