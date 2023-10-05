@@ -16,10 +16,10 @@ static const unsigned int gappov    = gap;       /* vert outer gap between windo
 static       int smartgaps          = 0;        /* 1 means no outer gap when there is only one window */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-//static const char *fonts[]          = { "Source Code Pro:size=11", "BitstreamVeraSansMono Nerd Font Mono:style=Roman:pixelsize=20:antialias=true:autohint=true" };
-//static const char *fonts[]          = { "Source Code Pro:size=11", "BitstromWera Nerd Font Mono:style=Regular:pixelsize=20:antialias=true:autohint=true" };
-static const char *fonts[]          = { "Source Code Pro:size=11"};
-static const char dmenufont[]       = "Source Code Pro:size=11";
+//static const char *fonts[]          = { "Source Code Pro:size=11"};
+//static const char dmenufont[]       = "Source Code Pro:size=11";
+static const char *fonts[]          = { "JetBrainsMono NF:size=11"};
+static const char dmenufont[]       = "JetBrainsMono NF:size=11";
 
 static char normbgcolor[]           = "#222222";
 static char normbordercolor[]       = "#444444";
@@ -84,7 +84,7 @@ static const Rule rules[] = {
   { TERMCLASS,  NULL,     NULL,           0,         0,          1,       0,        -1 },
 	{ TERMCLASS,  "spterm", NULL,	       SPTAG(0),  1,	      1,	   0,	     -1 },
 	/*{ TERMCLASS,  "spcalc", NULL,	       SPTAG(1),  1,	      1,	   0,	     -1 },*/
-	{ "Transmission-gtk", "transmission-gtk", "Transmission",      1 << 3,         0,	      0,	   0,	     -1 },
+	{ "transmission-gtk", "transmission-gtk", "Transmission",      1 << 3,         0,	      0,	   0,	     -1 },
 	//{ "passmenuPasswordEntry", NULL, NULL,  0,         1,	      0,	   0,	     -1 },
 	//{ "firefox", "Navigator", "Mozilla Firefox",      1 << 2,         0,	      0,	   0,	     -1 },
 	{ "firefox", "Navigator", "Mozilla Firefox",      1 << 1,         0,	      0,	   0,	     -1 },
@@ -192,7 +192,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,		        XK_r,  	   togglescratch,  {.ui = 9 } },*/
 
 	{ MODKEY|ShiftMask,		        XK_x,  	   spawn,  SHCMD("setsid -f $TERMINAL -e bc -lq") },
-	{ MODKEY|ShiftMask,		        XK_t,  	   spawn,  SHCMD("setsid -f $TERMINAL -e tasks-wraper") },
+	{ MODKEY|ShiftMask,		        XK_t,  	   spawn,  SHCMD("tasks open") },
 	//{ MODKEY|ShiftMask,	        	XK_p,  	   spawn,  SHCMD("keepassxc") },
 	{ MODKEY|ShiftMask,	        	XK_p,  	   spawn,  SHCMD("setsid -f passmenu -c") },
 	{ MODKEY|ShiftMask,	        	XK_f,  	   spawn,  SHCMD("setsid -f $TERMINAL -e multi-lf") },
@@ -208,7 +208,7 @@ static Key keys[] = {
 	{ MODKEY|ControlMask,    		XK_b,  	   spawn,  SHCMD("update-dwmblocks") },
 	{ MODKEY|ControlMask|ShiftMask, XK_b,  	   spawn,  SHCMD("update-dwmblocks -r") },
 	{ MODKEY,    		            XK_v,  	   spawn,  SHCMD("setsid -f $TERMINAL -e $EDITOR -c 'startinsert'") },
-	{ LEFTALT,		                XK_space,  spawn,  SHCMD("toggle-all-mpv") },
+	{ LEFTALT,		                XK_space,  spawn,  SHCMD("echo '{ \"command\": [\"cycle\", \"pause\"] }' | socat - /tmp/mpvsocket") },
 
 	{ MODKEY,                       XK_s,      togglesticky,   {0} },
 	{ MODKEY|ShiftMask,             XK_e,      spawn,          {.v = (const char*[]){"dmenuunicode", NULL} } },
@@ -278,7 +278,7 @@ static Key keys[] = {
 	{ 0,XF86XK_WLAN,                           spawn,          SHCMD("rfkill toggle wifi ; wireless-toggle -w") },
 	{ ControlMask,                  XK_F8,     spawn,          SHCMD("setsid -f wireless-toggle -b") },
 	{ LEFTALT|MODKEY|ControlMask|ShiftMask,                  XK_s,     spawn,          SHCMD("setbg") },
-	{ LEFTALT|MODKEY|ControlMask|ShiftMask,                  XK_d,     spawn,          SHCMD("delete-current-wallpaper") },
+	{ LEFTALT|MODKEY|ControlMask|ShiftMask,                  XK_d,     spawn,          SHCMD("setbg -d") },
 
     { MODKEY,                       XK_F5,     xrdb,           {.v = NULL } },
 
