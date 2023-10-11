@@ -211,7 +211,7 @@ static Key keys[] = {
 	{ LEFTALT,		                XK_space,  spawn,  SHCMD("echo '{ \"command\": [\"cycle\", \"pause\"] }' | socat - /tmp/mpvsocket") },
 
 	{ MODKEY,                       XK_s,      togglesticky,   {0} },
-	{ MODKEY|ShiftMask,             XK_e,      spawn,          {.v = (const char*[]){"dmenuunicode", NULL} } },
+	{ MODKEY|ShiftMask,             XK_e,      spawn,          {.v = (const char*[]){"emoji", NULL} } },
 	{ MODKEY|ShiftMask,             XK_c,      spawn,          {.v = (const char*[]){"clipmenu", NULL} } },
 	{ MODKEY|ShiftMask|ControlMask, XK_c,      spawn,          {.v = (const char*[]){"clear-clipboards", NULL} } },
 	{ MODKEY|ControlMask,           XK_r,      spawn,          {.v = (const char*[]){"remaps", NULL} } },
